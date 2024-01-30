@@ -34,19 +34,21 @@ export function createMinner(userData) {
   });
 }
 
-export function loginEleCommission(loginInfo) {
+export function loginEleCommission({ username, password }) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
         "http://localhost:8080/EleCommissonAuth/login-EleCommission",
         {
           method: "POST",
-          body: JSON.stringify(loginInfo),
+          body: JSON.stringify({ username: username, password: password }),
           headers: { "content-type": "application/json" },
         }
       );
       if (response.ok) {
         const data = await response.json();
+        console.log({ data });
+        toast.success("Login successful");
         resolve({ data });
       } else {
         const error = await response.text();
@@ -67,6 +69,7 @@ export function checkEleCommission() {
       );
       if (response.ok) {
         const data = await response.json();
+        console.log("data : ", data);
         resolve({ data });
       } else {
         const error = await response.text();

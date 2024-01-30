@@ -75,6 +75,7 @@ export const updateElectionCommissionerAsync = createAsyncThunk(
 export const updateMinnerRoleAsync = createAsyncThunk(
   "electionCommision/updateMinnerRole",
   async (data) => {
+    console.log(data);
     const response = await updateMinnerRole(data);
     return response.data;
   }
@@ -98,8 +99,8 @@ export const updateVoterRoleAsync = createAsyncThunk(
 
 export const deleteMinnerAsync = createAsyncThunk(
   "electionCommision/deleteMinner",
-  async (id) => {
-    const response = await deleteMinner(id);
+  async (data) => {
+    const response = await deleteMinner(data);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -107,8 +108,8 @@ export const deleteMinnerAsync = createAsyncThunk(
 
 export const deleteCandidateAsync = createAsyncThunk(
   "electionCommision/deleteCandidate",
-  async (id) => {
-    const response = await deleteCandidate(id);
+  async (data) => {
+    const response = await deleteCandidate(data);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -116,8 +117,8 @@ export const deleteCandidateAsync = createAsyncThunk(
 
 export const deleteVoterAsync = createAsyncThunk(
   "electionCommision/deleteVoter",
-  async (id) => {
-    const response = await deleteVoter(id);
+  async (data) => {
+    const response = await deleteVoter(data);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -216,7 +217,7 @@ const electionCommisionSlice = createSlice({
       })
       .addCase(deleteVoterAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        const index = state.voters.findIndex(
+        const index = state.Voters.findIndex(
           (item) => item.id === action.payload.id
         );
         state.Voters.splice(index, 1);

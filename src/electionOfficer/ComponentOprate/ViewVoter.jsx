@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllVotersAsync,
   selectVoters,
+  updateVoterRoleAsync,
+  deleteVoterAsync,
   selectTotalVoters,
 } from "./electionOfficerSlice";
 
@@ -12,14 +14,20 @@ const VoterPage = () => {
   let filter = { role: "voter", constituency: "Lanja" };
   const voters = useSelector(selectVoters);
   const voterTotalCount = useSelector(selectTotalVoters);
-
+  const DataRole = {
+    id: "65b0b46443af5537c7499196",
+    roleD: "voter",
+  };
   useEffect(() => {
-    dispatch(getAllVotersAsync({ pagination, filter }));
+    // dispatch(deleteVoterAsync(DataRole));
+    // dispatch(updateVoterRoleAsync(DataRole));
+    //dispatch(getAllVotersAsync({ pagination, filter }));
   }, []);
 
   return (
     <>
-      <div>Total Voters: {voterTotalCount}</div>
+      Hello Voter
+      {/*<div>Total Voters: {voterTotalCount}</div>
       <div>
         {Array.isArray(voters) && voters.length > 0 ? (
           voters.map((voter) => (
@@ -30,13 +38,13 @@ const VoterPage = () => {
               <p>Role: {voter.role}</p>
               <p>Voter ID: {voter.VoterID}</p>
               <p>Constituency: {voter.Constituency}</p>
-              {/* Add more fields as needed */}
+             
             </div>
           ))
         ) : (
           <p>No voters data available</p>
         )}
-      </div>
+        </div> */}
     </>
   );
 };

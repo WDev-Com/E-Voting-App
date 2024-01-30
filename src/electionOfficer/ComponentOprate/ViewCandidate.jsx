@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllCandidatessAsync,
   selectCandidates,
+  deleteCandidateAsync,
   selectTotalCandidates,
+  updateCandidateRoleAsync,
 } from "./electionOfficerSlice";
 
 const CandidatePage = () => {
@@ -13,14 +15,21 @@ const CandidatePage = () => {
   // constituency: "Lanja"; party: "BJP"
   const candidates = useSelector(selectCandidates);
   const candidatestotalcount = useSelector(selectTotalCandidates);
-  console.log(candidates);
+  // console.log(candidates);
+  const DataRole = {
+    id: "65b0b60fe414f2ec4b5f426b",
+    roleD: "candidate",
+  };
   useEffect(() => {
-    dispatch(getAllCandidatessAsync({ pagination, filter }));
+    // dispatch(deleteCandidateAsync(DataRole));
+    // dispatch(updateCandidateRoleAsync(DataRole));
+    // dispatch(getAllCandidatessAsync({ pagination, filter }));
   }, []);
 
   return (
     <>
-      <div>{candidatestotalcount}</div>
+      Hello Candidate
+      {/*<div>{candidatestotalcount}</div>
       <div>
         {candidates.map((ele) => (
           <div key={ele.id}>
@@ -36,7 +45,7 @@ const CandidatePage = () => {
             <br></br>
           </div>
         ))}
-      </div>
+        </div>*/}
     </>
   );
 };

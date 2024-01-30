@@ -145,19 +145,46 @@ export const getAllVoters = (pagination, filter) => {
   });
 };
 
-export function updateVoterRole(id) {
+export function updateVoterRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/UpdateVoterRole/:id" + id,
+        "http://localhost:8080/EleCommisson/UpdateVoterRole/" + id,
         {
           method: "PATCH",
-          body: JSON.stringify(query),
+          body: JSON.stringify({ role: roleD }),
           headers: { "content-type": "application/json" },
         }
       );
       const data = await response.json();
       // console.log("Response from server:", data); // Add this line to log the response
+      if (response.ok) {
+        toast.success("Update Successfull");
+      }
+      resolve(data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Update Fail ");
+    }
+  });
+}
+
+export function updateCandidateRole({ id, roleD }) {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/EleCommisson/GiveRollToCandidate/" + id,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ role: roleD }),
+          headers: { "content-type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      // console.log("Response from server:", data); // Add this line to log the response
+      if (response.ok) {
+        toast.success("Update Successfull");
+      }
       resolve({ data });
     } catch (error) {
       console.error(error);
@@ -166,74 +193,66 @@ export function updateVoterRole(id) {
   });
 }
 
-export function updateCandidateRole(id) {
+export function updateMinnerRole({ id, roleD }) {
+  console.log("Update Minner : " + id, roleD);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/GiveRollToCandidate/:id" + id,
+        "http://localhost:8080/EleCommisson/GiveRollToMinner/" + id,
         {
           method: "PATCH",
-          body: JSON.stringify(query),
+          body: JSON.stringify({ role: roleD }),
           headers: { "content-type": "application/json" },
         }
       );
-      const data = await response.json();
+      const resdata = await response.json();
       // console.log("Response from server:", data); // Add this line to log the response
-      resolve({ data });
+      if (response.ok) {
+        toast.success("Update Successfull");
+      }
+      resolve(resdata);
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Update Fail ");
     }
   });
 }
 
-export function updateMinnerRole(id) {
+export function deleteMinner({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/GiveRollToMinner/:id" + id,
-        {
-          method: "PATCH",
-          body: JSON.stringify(query),
-          headers: { "content-type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      // console.log("Response from server:", data); // Add this line to log the response
-      resolve({ data });
-    } catch (error) {
-      console.error(error);
-      toast.error("Update Fail ");
-    }
-  });
-}
-
-export function deleteMinner(id) {
-  return new Promise(async (resolve) => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/EleCommisson/RemoveMinner/:id" + id,
+        "http://localhost:8080/EleCommisson/RemoveMinner/" + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
         }
       );
+      if (!response.ok) {
+        toast.error("Already deleted");
+      }
       const data = await response.json();
       // TODO: on server it will only return some info of user (not password)
-      resolve({ data: { id: itemId } });
+      if (response.ok) {
+        toast.success("Delete Successfull");
+      } else {
+        toast.error("Already deleted");
+      }
+
+      resolve({ data });
     } catch (error) {
-      toast.error("Delete Fail", error);
-      console.error("Delete Fail");
+      toast.error("Delete Fail");
+      console.log(error);
       // Handle error, show an error toast, etc.
     }
   });
 }
 
-export function deleteCandidate(id) {
+export function deleteCandidate({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/RemoveCandidate/:id" + id,
+        "http://localhost:8080/EleCommisson/RemoveCandidate/" + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -241,20 +260,25 @@ export function deleteCandidate(id) {
       );
       const data = await response.json();
       // TODO: on server it will only return some info of user (not password)
-      resolve({ data: { id: itemId } });
+      if (response.ok) {
+        toast.success("Delete Successfull");
+      } else {
+        toast.error("Already deleted");
+      }
+      resolve({ data });
     } catch (error) {
-      toast.error("Delete Fail", error);
-      console.error("Delete Fail");
+      toast.error("Delete Fail");
+      // console.log("Delete Fail");
       // Handle error, show an error toast, etc.
     }
   });
 }
 
-export function deleteVoter(id) {
+export function deleteVoter({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/RemoveVoter/:id" + id,
+        "http://localhost:8080/EleCommisson/RemoveVoter/" + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -262,10 +286,16 @@ export function deleteVoter(id) {
       );
       const data = await response.json();
       // TODO: on server it will only return some info of user (not password)
-      resolve({ data: { id: itemId } });
+
+      if (response.ok) {
+        toast.success("Delete Successfull");
+      } else {
+        toast.error("Already deleted");
+      }
+      resolve({ data });
     } catch (error) {
-      toast.error("Delete Fail", error);
-      console.error("Delete Fail");
+      toast.error("Delete Fail@");
+      console.log(error);
       // Handle error, show an error toast, etc.
     }
   });

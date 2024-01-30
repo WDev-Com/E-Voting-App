@@ -18,7 +18,7 @@ const initialState = {
 
 //////////////*************AUTH*******************/////////////////////
 export const createEleCommissionAsync = createAsyncThunk(
-  "electionCommision/createEleCommission",
+  "electionCommisionAuth/createEleCommission",
   async (userData) => {
     const response = await createEleCommission(userData);
     // The value we return becomes the `fulfilled` action payload
@@ -27,7 +27,7 @@ export const createEleCommissionAsync = createAsyncThunk(
 );
 
 export const createMinnerAsync = createAsyncThunk(
-  "electionCommision/createMinner",
+  "electionCommisionAuth/createMinner",
   async (userData) => {
     const response = await createMinner(userData);
     // The value we return becomes the `fulfilled` action payload
@@ -36,10 +36,11 @@ export const createMinnerAsync = createAsyncThunk(
 );
 
 export const loginEleCommissionAsync = createAsyncThunk(
-  "electionCommision/loginEleCommission",
+  "electionCommisionAuth/loginEleCommission",
   async (loginInfo, { rejectWithValue }) => {
     try {
       const response = await loginEleCommission(loginInfo);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -49,10 +50,11 @@ export const loginEleCommissionAsync = createAsyncThunk(
 );
 
 export const checkEleCommissionAsync = createAsyncThunk(
-  "electionCommision/checkEleCommission",
+  "electionCommisionAuth/checkEleCommission",
   async () => {
     try {
       const response = await checkEleCommission();
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -61,7 +63,7 @@ export const checkEleCommissionAsync = createAsyncThunk(
 );
 
 export const signOutAsync = createAsyncThunk(
-  "electionCommision/signOut",
+  "electionCommisionAuth/signOut",
   async () => {
     const response = await signOut();
     // The value we return becomes the `fulfilled` action payload
@@ -69,9 +71,9 @@ export const signOutAsync = createAsyncThunk(
   }
 );
 
-const electionCommisionSlice = createSlice({
+const electionCommisionAuthSlice = createSlice({
   //When we use state in createSlice it only define for this mwthod
-  name: "electionCommision",
+  name: "electionCommisionAuth",
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -96,8 +98,12 @@ const electionCommisionSlice = createSlice({
       })
       .addCase(loginEleCommissionAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInUserToken = action.payload;
+        state.electioncommissner = action.payload;
+        state.loggedInUserToken = action.payload.id; // Update the user token
+        console.log("action.payload", action.payload);
+        console.log("state.loggedInUserToken ", state.loggedInUserToken);
       })
+
       .addCase(loginEleCommissionAsync.rejected, (state, action) => {
         state.status = "idle";
         state.error = action.payload;
@@ -115,6 +121,7 @@ const electionCommisionSlice = createSlice({
       .addCase(checkEleCommissionAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUserToken = action.payload;
+
         state.userChecked = true;
       })
       .addCase(checkEleCommissionAsync.rejected, (state, action) => {
@@ -125,10 +132,11 @@ const electionCommisionSlice = createSlice({
 });
 
 export const selectLoggedInUserToken = (state) =>
-  state.electionCommision.loggedInUserToken;
+  state.electionCommisionAuth.loggedInUserToken;
 export const selectElectionCommissner = (state) =>
-  state.electionCommision.electioncommissner;
-export const selectError = (state) => state.electionCommision.error;
-export const selectUserChecked = (state) => state.electionCommision.userChecked;
+  state.electionCommisionAuth.electioncommissner;
+export const selectError = (state) => state.electionCommisionAuth.error;
+export const selectUserChecked = (state) =>
+  state.electionCommisionAuth.userChecked;
 
-export default electionCommisionSlice.reducer;
+export default electionCommisionAuthSlice.reducer;
