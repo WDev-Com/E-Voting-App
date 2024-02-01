@@ -5,19 +5,19 @@ import {
   getEleCommissionAsync,
   selectElectionCommissner,
 } from "./electionOfficerSlice";
-
 import {
   selectLoggedInUserToken,
   signOutAsync,
 } from "../ComponentAuth/electionOfficerAuthSlice";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 const ElectionCommissionPage = () => {
   const dispatch = useDispatch();
   const currentElectionCommissioner = useSelector(selectElectionCommissner);
-  const currentUser = useSelector(selectLoggedInUserToken);
-  console.log("currentUser :======== ", currentUser);
+  const currentUserID = useSelector(selectLoggedInUserToken);
+  // console.log("currentUser :======== ", currentUserID);
   const electionCommisionNew = {
-    id: "65aa65209d556186191e6ecd",
+    id: currentUserID,
     OffierID: "DDRR",
   };
   /*
@@ -31,14 +31,14 @@ const ElectionCommissionPage = () => {
   */
   // electionCommisionNew["addresses"].push("Pali");
   useEffect(() => {
-    dispatch(signOutAsync());
-    // dispatch(getEleCommissionAsync({ id: electionCommisionNew.id }));
+    // dispatch(signOutAsync());
+    dispatch(getEleCommissionAsync({ id: currentUserID }));
     // dispatch(updateElectionCommissionerAsync(electionCommisionNew));
   }, []);
 
   return (
     <>
-      {currentUser ? (
+      {currentElectionCommissioner ? (
         <div>
           <h2>Election Commission Page</h2>
 
@@ -61,6 +61,25 @@ const ElectionCommissionPage = () => {
       ) : (
         "Fuck"
       )}
+      <button
+        onClick={() => {
+          dispatch(signOutAsync());
+        }}
+      >
+        Logout
+      </button>
+      <Link to="/ViewVoter">
+        <button>View Voter</button>
+      </Link>
+      <Link to="/ViewCandidate">
+        <button>View Candidate</button>
+      </Link>
+      <Link to="/ViewMinner">
+        <button>View Minner</button>
+      </Link>
+      <Link to="/CreateMinner">
+        <button>Create Minner</button>
+      </Link>
     </>
   );
 };

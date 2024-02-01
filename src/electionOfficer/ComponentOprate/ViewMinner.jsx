@@ -7,29 +7,27 @@ import {
   updateMinnerRoleAsync,
   deleteMinnerAsync,
 } from "./electionOfficerSlice";
+import { Link } from "react-router-dom";
 
 const MinnerPage = () => {
   const dispatch = useDispatch();
-  let pagination = { page: 1, pageSize: 1 };
+  let pagination = { page: 1, pageSize: 10 };
   let filter = { role: "" }; //minner
   const minner = useSelector(selectMiners);
   const MinnerTotalCount = useSelector(selectTotalMiners);
-  const DataRole = {
-    id: "65b3757bf2bf8e0e0148836c",
-    roleD: "minner",
-  };
+
   useEffect(() => {
     // dispatch(deleteMinnerAsync(DataRole));
     // dispatch(updateMinnerRoleAsync(DataRole));
-    // dispatch(getAllMinnersAsync({ pagination, filter }));
+    dispatch(getAllMinnersAsync({ pagination, filter }));
   }, []);
 
   return (
     <>
       <div>Hello Minner</div>
-      {/*
+
       <div>Total Minner: {MinnerTotalCount}</div>
-    <div>
+      <div>
         {Array.isArray(minner) && minner.length > 0 ? (
           minner.map((miner) => (
             <div key={miner.id}>
@@ -47,7 +45,9 @@ const MinnerPage = () => {
           <p>No Minner data available</p>
         )}
       </div>
-        */}
+      <Link to="/ElectionCommissionPage">
+        <button>Home</button>
+      </Link>
     </>
   );
 };

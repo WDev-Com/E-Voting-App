@@ -5,7 +5,7 @@ export function updateElectionCommissioner(data) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/UpdateElectionCommissioner/" +
+        `http://localhost:8080/EleCommisson/UpdateElectionCommissioner/` +
           data.id,
         {
           method: "PATCH",
@@ -28,18 +28,18 @@ export function updateElectionCommissioner(data) {
 
 ///////// It can use for fetching the user using return token
 export function getEleCommission({ id }) {
-  console.log("id", id);
+  // console.log("id", id);
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      "http://localhost:8080/EleCommisson/getEleCommission/" + id,
+      `http://localhost:8080/EleCommisson/getEleCommission/` + id,
       {
         method: "POST",
         headers: { "content-type": "application/json" },
       }
     );
     const dataA = await response.json();
-    console.log(dataA);
+    // console.log(dataA);
     // console.log("Fetched Top Produts:", data); // Add this line
     resolve({ data: { ElectionComission: dataA } });
   });
@@ -48,22 +48,23 @@ export function getEleCommission({ id }) {
 export const getAllCandidates = (pagination, filters) => {
   // Extract pagination parameters
 
-  console.log("===============>", pagination, filters);
+  // console.log("===============>", pagination, filters);
   const page = pagination.page || 1;
   const pageSize = pagination.pageSize || 10;
 
   return new Promise(async (resolve) => {
     try {
       // Construct the query string
-      let queryString = `?page=${page}&pageSize=${pageSize}`;
+      let queryString = `page=${page}&pageSize=${pageSize}`;
       for (let key in filters) {
         if (key === "role" || key === "constituency" || key === "party") {
           queryString += `&${key}=${filters[key]}`;
         }
       }
+      // console.log("For Candidate queryString " + queryString);
       // Fetch candidates with pagination and filters
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/getAllCandidate${queryString}`
+        `http://localhost:8080/EleCommisson/getAllCandidate?${queryString}`
       );
       const data = await response.json();
       const totalCandidatesCOUNT = response.headers.get(
@@ -114,7 +115,7 @@ export const getAllVoters = (pagination, filter) => {
   const page = pagination._page || 1;
   const pageSize = pagination._limit || 10;
   let queryString = `?page=${page}&pageSize=${pageSize}`;
-  console.log(queryString);
+  // console.log(queryString);
   // Filter by Constituency
   if (filter.constituency) {
     queryString += `&constituency=${filter.constituency}`;
@@ -125,7 +126,7 @@ export const getAllVoters = (pagination, filter) => {
     queryString += `&role=${filter.role}`;
   }
 
-  console.log(queryString);
+  // console.log(queryString);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
@@ -133,8 +134,8 @@ export const getAllVoters = (pagination, filter) => {
       );
       const data = await response.json();
       const totalVoterS = response.headers.get("X-TotalVoter-Count");
-      console.log("data=========>", data);
-      console.log("totalItems=========>", totalVoterS);
+      // console.log("data=========>", data);
+      // console.log("totalItems=========>", totalVoterS);
       resolve({
         data: { voters: data, totalvoters: +totalVoterS },
       });
@@ -149,7 +150,7 @@ export function updateVoterRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/UpdateVoterRole/" + id,
+        `http://localhost:8080/EleCommisson/UpdateVoterRole/` + id,
         {
           method: "PATCH",
           body: JSON.stringify({ role: roleD }),
@@ -173,7 +174,7 @@ export function updateCandidateRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/GiveRollToCandidate/" + id,
+        `http://localhost:8080/EleCommisson/GiveRollToCandidate/` + id,
         {
           method: "PATCH",
           body: JSON.stringify({ role: roleD }),
@@ -198,7 +199,7 @@ export function updateMinnerRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/GiveRollToMinner/" + id,
+        `http://localhost:8080/EleCommisson/GiveRollToMinner/` + id,
         {
           method: "PATCH",
           body: JSON.stringify({ role: roleD }),
@@ -222,7 +223,7 @@ export function deleteMinner({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/RemoveMinner/" + id,
+        `http://localhost:8080/EleCommisson/RemoveMinner/` + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -252,7 +253,7 @@ export function deleteCandidate({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/RemoveCandidate/" + id,
+        `http://localhost:8080/EleCommisson/RemoveCandidate/` + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -278,7 +279,7 @@ export function deleteVoter({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommisson/RemoveVoter/" + id,
+        `http://localhost:8080/EleCommisson/RemoveVoter/` + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -306,7 +307,7 @@ export function deleteVoter({ id }) {
 export function createEleCommission(userData) {
   return new Promise(async (resolve) => {
     const response = await fetch(
-      "http://localhost:8080/EleCommissonAuth/signup-candidate",
+      `http://localhost:8080/EleCommissonAuth/signup-candidate`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -322,7 +323,7 @@ export function createEleCommission(userData) {
 export function createMinner(userData) {
   return new Promise(async (resolve) => {
     const response = await fetch(
-      "http://localhost:8080/EleCommissonAuth/Create-minner",
+      `http://localhost:8080/EleCommissonAuth/Create-minner`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -339,7 +340,7 @@ export function loginEleCommission(loginInfo) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommissonAuth/login-EleCommission",
+        `http://localhost:8080/EleCommissonAuth/login-EleCommission`,
         {
           method: "POST",
           body: JSON.stringify(loginInfo),
@@ -364,7 +365,7 @@ export function checkEleCommission() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/EleCommissonAuth/check-EleCommission"
+        `http://localhost:8080/EleCommissonAuth/check-EleCommission`
       );
       if (response.ok) {
         const data = await response.json();
@@ -388,7 +389,7 @@ export function signOut() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          "http://localhost:8080/EleCommissonAuth/logoutEleCommission"
+          `http://localhost:8080/EleCommissonAuth/logoutEleCommission`
         );
         if (response.ok) {
           resolve({ data: "success" });

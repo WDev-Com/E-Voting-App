@@ -7,6 +7,7 @@ import {
   selectTotalCandidates,
   updateCandidateRoleAsync,
 } from "./electionOfficerSlice";
+import { Link } from "react-router-dom";
 
 const CandidatePage = () => {
   const dispatch = useDispatch();
@@ -23,13 +24,13 @@ const CandidatePage = () => {
   useEffect(() => {
     // dispatch(deleteCandidateAsync(DataRole));
     // dispatch(updateCandidateRoleAsync(DataRole));
-    // dispatch(getAllCandidatessAsync({ pagination, filter }));
+    dispatch(getAllCandidatessAsync({ pagination, filter }));
   }, []);
 
   return (
     <>
       Hello Candidate
-      {/*<div>{candidatestotalcount}</div>
+      <div>{candidatestotalcount}</div>
       <div>
         {candidates.map((ele) => (
           <div key={ele.id}>
@@ -45,7 +46,10 @@ const CandidatePage = () => {
             <br></br>
           </div>
         ))}
-        </div>*/}
+      </div>
+      <Link to="/ElectionCommissionPage">
+        <button>Home</button>
+      </Link>
     </>
   );
 };

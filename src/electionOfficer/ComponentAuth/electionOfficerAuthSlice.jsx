@@ -20,6 +20,7 @@ const initialState = {
 export const createEleCommissionAsync = createAsyncThunk(
   "electionCommisionAuth/createEleCommission",
   async (userData) => {
+    console.log("From Slice : ", userData);
     const response = await createEleCommission(userData);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
@@ -100,8 +101,6 @@ const electionCommisionAuthSlice = createSlice({
         state.status = "idle";
         state.electioncommissner = action.payload;
         state.loggedInUserToken = action.payload.id; // Update the user token
-        console.log("action.payload", action.payload);
-        console.log("state.loggedInUserToken ", state.loggedInUserToken);
       })
 
       .addCase(loginEleCommissionAsync.rejected, (state, action) => {
@@ -113,6 +112,7 @@ const electionCommisionAuthSlice = createSlice({
       })
       .addCase(signOutAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        state.userChecked = false;
         state.loggedInUserToken = null;
       })
       .addCase(checkEleCommissionAsync.pending, (state) => {
@@ -120,8 +120,11 @@ const electionCommisionAuthSlice = createSlice({
       })
       .addCase(checkEleCommissionAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInUserToken = action.payload;
-
+        state.loggedInUserToken = action.payload; // Check the correct property
+        // console.log(
+        //   "EleCom Auth Slice: ",
+        //   state.loggedInUserToken
+        // );
         state.userChecked = true;
       })
       .addCase(checkEleCommissionAsync.rejected, (state, action) => {
@@ -133,6 +136,7 @@ const electionCommisionAuthSlice = createSlice({
 
 export const selectLoggedInUserToken = (state) =>
   state.electionCommisionAuth.loggedInUserToken;
+
 export const selectElectionCommissner = (state) =>
   state.electionCommisionAuth.electioncommissner;
 export const selectError = (state) => state.electionCommisionAuth.error;

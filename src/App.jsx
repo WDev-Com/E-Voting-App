@@ -6,7 +6,7 @@ import "./App.css";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 
 /* Import of Components */
-import HomePage from "./DemoPage";
+import HomePage from "./electionOfficer/ComponentAuth/DemoPage";
 import ViewCandidate from "./electionOfficer/ComponentOprate/ViewCandidate";
 import ViewVoter from "./electionOfficer/ComponentOprate/ViewVoter";
 import ViewMinner from "./electionOfficer/ComponentOprate/ViewMinner";
@@ -15,8 +15,11 @@ import ElectionCommissionLoginPage from "./electionOfficer/ComponentAuth/LoginEl
 import {
   checkEleCommissionAsync,
   selectUserChecked,
+  selectLoggedInUserToken,
 } from "./electionOfficer/ComponentAuth/electionOfficerAuthSlice";
 import ProtectedEleCom from "./electionOfficer/ComponentAuth/ProtectedEleCom";
+import ElectionCommissionSignUpForm from "./electionOfficer/ComponentAuth/SignUpOfficer";
+import CreateMinnerPage from "./electionOfficer/ComponentAuth/CreateMinner";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -55,7 +58,7 @@ const router = createBrowserRouter([
     path: "/ElectionCommissionPage",
     element: (
       <ProtectedEleCom>
-        <ElectionCommissionPage></ElectionCommissionPage>
+        <ElectionCommissionPage></ElectionCommissionPage>{" "}
       </ProtectedEleCom>
     ),
   },
@@ -63,20 +66,30 @@ const router = createBrowserRouter([
     path: "/ElectionCommissionLoginPage",
     element: <ElectionCommissionLoginPage></ElectionCommissionLoginPage>,
   },
+  {
+    path: "/ElectionCommissionSignUpForm",
+    element: <ElectionCommissionSignUpForm></ElectionCommissionSignUpForm>,
+  },
+  {
+    path: "/CreateMinner",
+    element: <CreateMinnerPage></CreateMinnerPage>,
+  },
+  ,
 ]);
 
 function App() {
   const dispatch = useDispatch();
-  const checkEleCommissioner = useSelector(selectUserChecked);
+  const loggedInUserToken = useSelector(selectLoggedInUserToken);
+  const user = useSelector(selectUserChecked);
   useEffect(() => {
     dispatch(checkEleCommissionAsync());
-  }, [dispatch]);
-  console.log("checkEleCommissionUser : " + checkEleCommissioner);
+  }, [dispatch, user]);
+  console.log("CheckEleCommission User : " + user);
+  console.log("Logged In User Token : " + loggedInUserToken);
+
   return (
     <>
-      <div className="App">
-        {checkEleCommissioner && <RouterProvider router={router} />}
-      </div>
+      <div className="App">{user && <RouterProvider router={router} />}</div>
     </>
   );
 }

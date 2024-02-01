@@ -29,7 +29,7 @@ export const getEleCommissionAsync = createAsyncThunk(
   "electionCommision/getEleCommission",
   async (obj) => {
     const response = await getEleCommission(obj);
-    console.log("ID Object In Slice", obj);
+
     // console.log(filter);
     return response.data;
   }
@@ -47,9 +47,9 @@ export const getAllMinnersAsync = createAsyncThunk(
 export const getAllCandidatessAsync = createAsyncThunk(
   "electionCommision/getAllCandidates",
   async ({ pagination, filter }) => {
-    console.log("Slice==========>", pagination, filter);
+    // console.log("Slice==========>", pagination, filter);
     const response = await getAllCandidates(pagination, filter);
-    console.log("response========>", response);
+    // console.log("response========>", response);
     return response.data;
   }
 );
@@ -58,7 +58,7 @@ export const getAllVotersAsync = createAsyncThunk(
   "electionCommision/getAllVoters",
   async ({ pagination, filter }) => {
     const response = await getAllVoters(pagination, filter);
-    console.log("pagination, filter", pagination, filter);
+    // console.log("pagination, filter", pagination, filter);
     return response.data;
   }
 );
@@ -66,7 +66,7 @@ export const getAllVotersAsync = createAsyncThunk(
 export const updateElectionCommissionerAsync = createAsyncThunk(
   "electionCommision/updateElectionCommissioner",
   async (data) => {
-    console.log(data);
+    // console.log(data);
     const response = await updateElectionCommissioner(data);
     return response.data;
   }
@@ -75,7 +75,7 @@ export const updateElectionCommissionerAsync = createAsyncThunk(
 export const updateMinnerRoleAsync = createAsyncThunk(
   "electionCommision/updateMinnerRole",
   async (data) => {
-    console.log(data);
+    // console.log(data);
     const response = await updateMinnerRole(data);
     return response.data;
   }

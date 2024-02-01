@@ -4,7 +4,7 @@ export function fetchTopSearch() {
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      "http://localhost:8080/MemberGovtOperation/Getcandidate"
+      `http://localhost:8080/MemberGovtOperation/Getcandidate`
     );
     const data = await response.json();
     // console.log("Fetched Top Produts:", data); // Add this line
@@ -16,7 +16,7 @@ export function fetchTopSearch() {
 export function createCandidate(userData) {
   return new Promise(async (resolve) => {
     const response = await fetch(
-      "http://localhost:8080/MemberGovtAuth/signup-candidate",
+      `http://localhost:8080/MemberGovtAuth/signup-candidate`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -33,7 +33,7 @@ export function loginUser(loginInfo) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/MemberGovtAuth/login-candidate",
+        `http://localhost:8080/MemberGovtAuth/login-candidate`,
         {
           method: "POST",
           body: JSON.stringify(loginInfo),
@@ -58,7 +58,7 @@ export function checkAuth() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        "http://localhost:8080/MemberGovtAuth/check-candidate"
+        `http://localhost:8080/MemberGovtAuth/check-candidate`
       );
       if (response.ok) {
         const data = await response.json();
@@ -82,7 +82,7 @@ export function signOut() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          "http://localhost:8080/MemberGovtAuth/logoutCandidate"
+          `http://localhost:8080/MemberGovtAuth/logoutCandidate`
         );
         if (response.ok) {
           resolve({ data: "success" });

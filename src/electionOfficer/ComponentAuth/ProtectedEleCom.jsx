@@ -5,8 +5,8 @@ import { selectLoggedInUserToken } from "./electionOfficerAuthSlice";
 
 const Protected = ({ children }) => {
   const user = useSelector(selectLoggedInUserToken);
-  console.log("user : ------- : ", user);
-  if (user === undefined) {
+  // console.log("user Protected Side : ------- : ", user);
+  if (!user) {
     return (
       <Navigate to="/ElectionCommissionLoginPage" replace={true}></Navigate>
     );

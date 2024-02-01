@@ -3,15 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import {} from "./electionOfficerAuthSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { createEleCommissionAsync } from "./electionOfficerAuthSlice";
-const ElectionCommissionSignUpForm = () => {
+import { createMinnerAsync } from "./electionOfficerAuthSlice";
+/* 
+This Page Reloads Because of creting other jwt stratergy jwtMinner
+Will Sign Up Officer There Same JWT Stratergy
+*/
+const CreateMinnerPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
     email: "",
     password: "",
-    OffierID: "",
-    addresses: "",
+    role: "",
+    MinnerID: "",
     profileimages: "",
   });
   const dispatch = useDispatch();
@@ -24,15 +28,17 @@ const ElectionCommissionSignUpForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // Validate the form data
+    // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    /* This logic and approach for validation 
+    is wrong use validation other logic*/
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       console.log("ok");
-      dispatch(createEleCommissionAsync(formData));
+      dispatch(createMinnerAsync(formData));
     } else {
       console.log("not ok");
-      dispatch(createEleCommissionAsync(formData));
+      dispatch(createMinnerAsync(formData));
     }
 
     // Your signup logic goes here
@@ -106,13 +112,13 @@ const ElectionCommissionSignUpForm = () => {
           />
           {errors.password && <p className="error">{errors.password}</p>}
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Sign Up Minner</button>
       </form>
       <Link to="/ElectionCommissionLoginPage">
-        <button>Login Here</button>
+        <button>Home</button>
       </Link>
     </div>
   );
 };
 
-export default ElectionCommissionSignUpForm;
+export default CreateMinnerPage;

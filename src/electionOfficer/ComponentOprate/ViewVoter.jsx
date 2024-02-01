@@ -7,9 +7,11 @@ import {
   deleteVoterAsync,
   selectTotalVoters,
 } from "./electionOfficerSlice";
+import { Link, Navigate } from "react-router-dom";
 
 const VoterPage = () => {
   const dispatch = useDispatch();
+
   let pagination = { _page: 1, _limit: 2 };
   let filter = { role: "voter", constituency: "Lanja" };
   const voters = useSelector(selectVoters);
@@ -21,13 +23,13 @@ const VoterPage = () => {
   useEffect(() => {
     // dispatch(deleteVoterAsync(DataRole));
     // dispatch(updateVoterRoleAsync(DataRole));
-    //dispatch(getAllVotersAsync({ pagination, filter }));
+    dispatch(getAllVotersAsync({ pagination, filter }));
   }, []);
 
   return (
     <>
       Hello Voter
-      {/*<div>Total Voters: {voterTotalCount}</div>
+      <div>Total Voters: {voterTotalCount}</div>
       <div>
         {Array.isArray(voters) && voters.length > 0 ? (
           voters.map((voter) => (
@@ -38,13 +40,15 @@ const VoterPage = () => {
               <p>Role: {voter.role}</p>
               <p>Voter ID: {voter.VoterID}</p>
               <p>Constituency: {voter.Constituency}</p>
-             
             </div>
           ))
         ) : (
           <p>No voters data available</p>
         )}
-        </div> */}
+      </div>
+      <Link to="/ElectionCommissionPage">
+        <button>Home</button>
+      </Link>
     </>
   );
 };
