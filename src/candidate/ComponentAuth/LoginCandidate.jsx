@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  loginEleCommissionAsync,
-  selectLoggedInUserToken,
-} from "./electionOfficerAuthSlice";
+  selectLoggedInCandidateToken,
+  selectCandidateChecked,
+  loginCandidateAsync,
+} from "./CandidateAuthSlice";
 import { toast } from "react-toastify";
 import { Link, Navigate } from "react-router-dom";
 
-const ElectionCommissionPage = () => {
+const LoginCandidatePage = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUserToken);
+  const userCandidate = useSelector(selectLoggedInCandidateToken);
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -29,18 +30,18 @@ const ElectionCommissionPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginEleCommissionAsync(credentials));
+    dispatch(loginCandidateAsync(credentials));
   };
 
   return (
     <>
-      {!user ? (
-        <Navigate to={"/ElectionCommissionLoginPage"}></Navigate>
+      {!userCandidate ? (
+        <Navigate to={"/CandidateLogin"}></Navigate>
       ) : (
-        <Navigate to={"/ElectionCommissionPage"}></Navigate>
+        <Navigate to={"/CandidateProfile"}></Navigate>
       )}
       <div className="login-container">
-        <h2>Login Election Officer</h2>
+        <h2>Login Candidate</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -60,20 +61,17 @@ const ElectionCommissionPage = () => {
             required
           />
           <br />
-          <button type="submit">Login </button>
+          <button type="submit">Login</button>
         </form>
       </div>
-      <Link to="/ElectionCommissionSignUpForm">
-        <button>Sign Up Here</button>
+      <Link to="/ElectionCommissionLoginPage">
+        <button>Home</button>
       </Link>
-      <Link to="/MinnerLogin">
-        <button>Login Minner Here</button>
-      </Link>
-      <Link to="/CandidateLogin">
-        <button>Login Candidate Here</button>
+      <Link to="/CandidateSignup">
+        <button>Sign Up Candidate</button>
       </Link>
     </>
   );
 };
 
-export default ElectionCommissionPage;
+export default LoginCandidatePage;

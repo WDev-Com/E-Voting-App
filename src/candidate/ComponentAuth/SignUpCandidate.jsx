@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {} from "./electionOfficerAuthSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { createEleCommissionAsync } from "./electionOfficerAuthSlice";
-const ElectionCommissionSignUpForm = () => {
+import { createCandidateAsync } from "./CandidateAuthSlice";
+const CandidateSignUpForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -29,10 +28,10 @@ const ElectionCommissionSignUpForm = () => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       console.log("ok");
-      dispatch(createEleCommissionAsync(formData));
+      dispatch(createCandidateAsync(formData));
     } else {
       console.log("not ok");
-      dispatch(createEleCommissionAsync(formData));
+      dispatch(createCandidateAsync(formData));
     }
 
     // Your signup logic goes here
@@ -67,7 +66,7 @@ const ElectionCommissionSignUpForm = () => {
 
   return (
     <div>
-      <h2>Sign Up Election Officer Here</h2>
+      <h2>Sign Up Candidate Here</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
@@ -109,11 +108,11 @@ const ElectionCommissionSignUpForm = () => {
         </div>
         <button type="submit">Sign Up</button>
       </form>
-      <Link to="/ElectionCommissionLoginPage">
-        <button>Login Here</button>
+      <Link to="/CandidateLogin">
+        <button>Candidate Login Here</button>
       </Link>
     </div>
   );
 };
 
-export default ElectionCommissionSignUpForm;
+export default CandidateSignUpForm;

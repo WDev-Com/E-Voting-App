@@ -5,7 +5,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 
-/* Import of Components */
+/* Importing The Components */
 import HomePage from "./electionOfficer/ComponentAuth/DemoPage";
 import ViewCandidate from "./electionOfficer/ComponentOprate/ViewCandidate";
 import ViewVoter from "./electionOfficer/ComponentOprate/ViewVoter";
@@ -20,6 +20,15 @@ import {
 import ProtectedEleCom from "./electionOfficer/ComponentAuth/ProtectedEleCom";
 import ElectionCommissionSignUpForm from "./electionOfficer/ComponentAuth/SignUpOfficer";
 import CreateMinnerPage from "./electionOfficer/ComponentAuth/CreateMinner";
+import MinnerPage from "./minner/ComponentOprate/MinnerProfile";
+import LoginMinnerPage from "./minner/ComponentAuth/LoginMiner";
+import ProtectedMinner from "./minner/ComponentAuth/ProtectedMinner";
+import { selectMinnerChecked } from "./minner/ComponentAuth/minnerAuthSlice";
+import CandidateProfilePage from "./candidate/ComponentOprate/CandidateProfile";
+import LoginCandidatePage from "./candidate/ComponentAuth/LoginCandidate";
+import { selectCandidateChecked } from "./candidate/ComponentAuth/CandidateAuthSlice";
+import ProtectedCandiate from "./candidate/ComponentAuth/ProtectedMinner";
+import CandidateSignUpForm from "./candidate/ComponentAuth/SignUpCandidate";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -74,13 +83,42 @@ const router = createBrowserRouter([
     path: "/CreateMinner",
     element: <CreateMinnerPage></CreateMinnerPage>,
   },
-  ,
+  {
+    path: "/MinnerProfile",
+    element: (
+      <ProtectedMinner>
+        <MinnerPage></MinnerPage>
+      </ProtectedMinner>
+    ),
+  },
+  {
+    path: "/MinnerLogin",
+    element: <LoginMinnerPage></LoginMinnerPage>,
+  },
+  {
+    path: "/CandidateProfile",
+    element: (
+      <ProtectedCandiate>
+        <CandidateProfilePage></CandidateProfilePage>
+      </ProtectedCandiate>
+    ),
+  },
+  {
+    path: "/CandidateLogin",
+    element: <LoginCandidatePage></LoginCandidatePage>,
+  },
+  {
+    path: "/CandidateSignup",
+    element: <CandidateSignUpForm></CandidateSignUpForm>,
+  },
 ]);
 
 function App() {
   const dispatch = useDispatch();
   const loggedInUserToken = useSelector(selectLoggedInUserToken);
   const user = useSelector(selectUserChecked);
+  const userMinner = useSelector(selectMinnerChecked);
+  const userCadidate = useSelector(selectCandidateChecked);
   useEffect(() => {
     dispatch(checkEleCommissionAsync());
   }, [dispatch, user]);
@@ -89,7 +127,12 @@ function App() {
 
   return (
     <>
-      <div className="App">{user && <RouterProvider router={router} />}</div>
+      {/*  &&  */}
+      <div className="App">
+        {(user || userMinner || userCadidate) && (
+          <RouterProvider router={router} />
+        )}
+      </div>
     </>
   );
 }

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginEleCommissionAsync,
-  selectLoggedInUserToken,
-} from "./electionOfficerAuthSlice";
+import { loginMinnerAsync, selectLoggedInMinnerToken } from "./minnerAuthSlice";
 import { toast } from "react-toastify";
 import { Link, Navigate } from "react-router-dom";
 
-const ElectionCommissionPage = () => {
+const LoginMinnerPage = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUserToken);
+  const userMinner = useSelector(selectLoggedInMinnerToken);
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -29,18 +26,18 @@ const ElectionCommissionPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginEleCommissionAsync(credentials));
+    dispatch(loginMinnerAsync(credentials));
   };
 
   return (
     <>
-      {!user ? (
-        <Navigate to={"/ElectionCommissionLoginPage"}></Navigate>
+      {!userMinner ? (
+        <Navigate to={"/MinnerLogin"}></Navigate>
       ) : (
-        <Navigate to={"/ElectionCommissionPage"}></Navigate>
+        <Navigate to={"/MinnerProfile"}></Navigate>
       )}
       <div className="login-container">
-        <h2>Login Election Officer</h2>
+        <h2>Login Minner</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -60,20 +57,14 @@ const ElectionCommissionPage = () => {
             required
           />
           <br />
-          <button type="submit">Login </button>
+          <button type="submit">Login</button>
         </form>
       </div>
-      <Link to="/ElectionCommissionSignUpForm">
-        <button>Sign Up Here</button>
-      </Link>
-      <Link to="/MinnerLogin">
-        <button>Login Minner Here</button>
-      </Link>
-      <Link to="/CandidateLogin">
-        <button>Login Candidate Here</button>
+      <Link to="/ElectionCommissionLoginPage">
+        <button>Home</button>
       </Link>
     </>
   );
 };
 
-export default ElectionCommissionPage;
+export default LoginMinnerPage;
