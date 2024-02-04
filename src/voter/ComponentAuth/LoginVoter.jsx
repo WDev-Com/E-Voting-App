@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  loginEleCommissionAsync,
-  selectLoggedInUserToken,
-} from "./electionOfficerAuthSlice";
+  selectLoggedInVoterToken,
+  selectVoterChecked,
+  loginVoterAsync,
+} from "./voterAuthSlice";
 import { toast } from "react-toastify";
 import { Link, Navigate } from "react-router-dom";
 import HomeNavBar from "../../CommonComponent/Navigations/HomePageMenu";
 
-const ElectionCommissionPage = () => {
+const LoginVoterPage = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUserToken);
+  const userVoter = useSelector(selectLoggedInVoterToken);
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -30,19 +31,19 @@ const ElectionCommissionPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginEleCommissionAsync(credentials));
+    dispatch(loginVoterAsync(credentials));
   };
 
   return (
     <>
       <HomeNavBar>
-        {!user ? (
-          <Navigate to={"/ElectionCommissionLoginPage"}></Navigate>
+        {!userVoter ? (
+          <Navigate to={"/VoterLogin"}></Navigate>
         ) : (
-          <Navigate to={"/ElectionCommissionPage"}></Navigate>
+          <Navigate to={"/VoterProfile"}></Navigate>
         )}
         <div className="login-container">
-          <h2>Login Election Officer</h2>
+          <h2>Login Voter</h2>
           <form className="login-form" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -62,15 +63,18 @@ const ElectionCommissionPage = () => {
               required
             />
             <br />
-            <button type="submit">Login </button>
+            <button type="submit">Login</button>
           </form>
         </div>
-        <Link to="/ElectionCommissionSignUpForm">
-          <button>Sign Up Here</button>
+        <Link to="/ElectionCommissionLoginPage">
+          <button>Home</button>
+        </Link>
+        <Link to="/VoterSignup">
+          <button>Sign Up Voter</button>
         </Link>
       </HomeNavBar>
     </>
   );
 };
 
-export default ElectionCommissionPage;
+export default LoginVoterPage;

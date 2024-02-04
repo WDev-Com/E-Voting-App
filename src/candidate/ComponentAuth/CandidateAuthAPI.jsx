@@ -12,6 +12,7 @@ export function createCandidate(userData) {
       }
     );
     const data = await response.json();
+    console.log(response.ok);
     if (response.ok) {
       toast.success("SignUp successfully");
     } else {

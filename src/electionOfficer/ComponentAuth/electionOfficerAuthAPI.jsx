@@ -13,6 +13,11 @@ export function createEleCommission(userData) {
         headers: { "content-type": "application/json" },
       }
     );
+    if (response.ok) {
+      toast.success("SignUp Successful");
+    } else {
+      toast.error("Signup Failed");
+    }
     const data = await response.json();
     // TODO: on server it will only return some info of user (not password)
     resolve(data);
@@ -29,6 +34,11 @@ export function createMinner(userData) {
         headers: { "content-type": "application/json" },
       }
     );
+    if (response.ok) {
+      toast.success("SignUp Successful");
+    } else {
+      toast.error("Signup Failed");
+    }
     const data = await response.json();
     // TODO: on server it will only return some info of user (not password)
     resolve(data);

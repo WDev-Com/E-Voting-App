@@ -10,6 +10,7 @@ const ElectionCommissionSignUpForm = () => {
     username: "",
     email: "",
     password: "",
+    role: "",
     OffierID: "",
     addresses: "",
     profileimages: "",
@@ -25,16 +26,8 @@ const ElectionCommissionSignUpForm = () => {
     e.preventDefault();
     console.log(formData);
     // Validate the form data
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      console.log("ok");
-      dispatch(createEleCommissionAsync(formData));
-    } else {
-      console.log("not ok");
-      dispatch(createEleCommissionAsync(formData));
-    }
 
+    dispatch(createEleCommissionAsync(formData));
     // Your signup logic goes here
     // You can make an API call or handle it as needed
 

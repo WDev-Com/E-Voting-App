@@ -6,6 +6,7 @@ import {
   checkEleCommission,
   signOut,
 } from "./electionOfficerAuthAPI";
+import { toast } from "react-toastify";
 const initialState = {
   value: 0,
   loggedInUserToken: null, // this should only contain user identity => 'id'/'role'
@@ -23,6 +24,7 @@ export const createEleCommissionAsync = createAsyncThunk(
     console.log("From Slice : ", userData);
     const response = await createEleCommission(userData);
     // The value we return becomes the `fulfilled` action payload
+
     return response.data;
   }
 );

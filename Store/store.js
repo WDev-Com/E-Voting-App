@@ -5,6 +5,8 @@ import minnerReducer from "../src/minner/ComponentOprate/minnerSlice";
 import minnerAuthReducer from "../src/minner/ComponentAuth/minnerAuthSlice";
 import candidateReducer from "../src/candidate/ComponentOprate/CandidateSlice";
 import candidateAuthReducer from "../src/candidate/ComponentAuth/CandidateAuthSlice";
+import voterAuthReducer from "../src/voter/ComponentAuth/voterAuthSlice";
+import voterReducer from "../src/voter/ComponentOprate/voterSlice";
 const store = configureStore({
   reducer: {
     electionCommision: electionCommisionReducer,
@@ -13,6 +15,8 @@ const store = configureStore({
     MinnernAuth: minnerAuthReducer,
     candidate: candidateReducer,
     CandidateAuth: candidateAuthReducer,
+    voter: voterReducer,
+    VoterAuth: voterAuthReducer,
   },
 });
 

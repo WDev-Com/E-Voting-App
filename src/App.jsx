@@ -6,7 +6,7 @@ import "./App.css";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 
 /* Importing The Components */
-import HomePage from "./electionOfficer/ComponentAuth/DemoPage";
+import HomePage from "./electionOfficer/ComponentAuth/HomePage";
 import ViewCandidate from "./electionOfficer/ComponentOprate/ViewCandidate";
 import ViewVoter from "./electionOfficer/ComponentOprate/ViewVoter";
 import ViewMinner from "./electionOfficer/ComponentOprate/ViewMinner";
@@ -27,17 +27,19 @@ import { selectMinnerChecked } from "./minner/ComponentAuth/minnerAuthSlice";
 import CandidateProfilePage from "./candidate/ComponentOprate/CandidateProfile";
 import LoginCandidatePage from "./candidate/ComponentAuth/LoginCandidate";
 import { selectCandidateChecked } from "./candidate/ComponentAuth/CandidateAuthSlice";
-import ProtectedCandiate from "./candidate/ComponentAuth/ProtectedMinner";
+import ProtectedCandiate from "./candidate/ComponentAuth/ProtectedCandidate";
 import CandidateSignUpForm from "./candidate/ComponentAuth/SignUpCandidate";
+import ProtectedVoter from "./voter/ComponentAuth/ProtectedVoter";
+import VoterProfilePage from "./voter/ComponentOprate/VoterProfile";
+import VoterSignUpForm from "./voter/ComponentAuth/SignUpVoter";
+import LoginVoterPage from "./voter/ComponentAuth/LoginVoter";
+import { selectVoterChecked } from "./voter/ComponentAuth/voterAuthSlice";
+import VoterEVMPage from "./voter/ComponentOprate/EVM";
 /* Import of Components */
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedEleCom>
-        <HomePage></HomePage>
-      </ProtectedEleCom>
-    ),
+    element: <HomePage></HomePage>,
   },
   {
     path: "/ViewCandidate",
@@ -111,6 +113,30 @@ const router = createBrowserRouter([
     path: "/CandidateSignup",
     element: <CandidateSignUpForm></CandidateSignUpForm>,
   },
+  {
+    path: "/VoterProfile",
+    element: (
+      <ProtectedVoter>
+        <VoterProfilePage></VoterProfilePage>
+      </ProtectedVoter>
+    ),
+  },
+  {
+    path: "/VoterLogin",
+    element: <LoginVoterPage></LoginVoterPage>,
+  },
+  {
+    path: "/VoterSignup",
+    element: <VoterSignUpForm></VoterSignUpForm>,
+  },
+  {
+    path: "/VoteOnEVM",
+    element: (
+      <ProtectedVoter>
+        <VoterEVMPage></VoterEVMPage>
+      </ProtectedVoter>
+    ),
+  },
 ]);
 
 function App() {
@@ -119,6 +145,7 @@ function App() {
   const user = useSelector(selectUserChecked);
   const userMinner = useSelector(selectMinnerChecked);
   const userCadidate = useSelector(selectCandidateChecked);
+  const userVoter = useSelector(selectVoterChecked);
   useEffect(() => {
     dispatch(checkEleCommissionAsync());
   }, [dispatch, user]);
@@ -129,7 +156,7 @@ function App() {
     <>
       {/*  &&  */}
       <div className="App">
-        {(user || userMinner || userCadidate) && (
+        {(user || userMinner || userCadidate || userVoter) && (
           <RouterProvider router={router} />
         )}
       </div>

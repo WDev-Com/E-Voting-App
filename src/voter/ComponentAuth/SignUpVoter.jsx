@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { createCandidateAsync } from "./CandidateAuthSlice";
-const CandidateSignUpForm = () => {
+import { createVoterAsync } from "./voterAuthSlice";
+const VoterSignUpForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     username: "",
     email: "",
     password: "",
+    authority: "",
     role: "",
-    CandidateID: "",
+    VoterID: "",
     Constituency: "",
-    Party: "",
-    VoteCount: "",
     addresses: "",
     profileimages: "",
   });
@@ -29,11 +28,10 @@ const CandidateSignUpForm = () => {
     console.log(formData);
     // Validate the form data
 
-    dispatch(createCandidateAsync(formData));
+    dispatch(createVoterAsync(formData));
 
     // Your signup logic goes here
     // You can make an API call or handle it as needed
-
     // Reset the form after successful submission
   };
 
@@ -55,7 +53,7 @@ const CandidateSignUpForm = () => {
 
   return (
     <div>
-      <h2>Sign Up Candidate Here</h2>
+      <h2>Sign Up Voter Here</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
@@ -97,11 +95,11 @@ const CandidateSignUpForm = () => {
         </div>
         <button type="submit">Sign Up</button>
       </form>
-      <Link to="/CandidateLogin">
-        <button>Candidate Login Here</button>
+      <Link to="/VoterLogin">
+        <button>Voter Login Here</button>
       </Link>
     </div>
   );
 };
 
-export default CandidateSignUpForm;
+export default VoterSignUpForm;
