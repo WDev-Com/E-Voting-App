@@ -5,7 +5,7 @@ export function getCandidateById({ id }) {
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      `http://localhost:8080/MemberGovtOperation/GetcandidateById/` + id,
+      `http://localhost:8081/MemberGovtOperation/GetcandidateById/` + id,
       {
         method: "POST",
         headers: { "content-type": "application/json" },

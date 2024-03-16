@@ -22,14 +22,14 @@ function classNames(...classes) {
 export default function HomeNavBar({ children }) {
   return (
     <div className="min-h-full">
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav" className="bg-indigo-400">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -42,9 +42,9 @@ export default function HomeNavBar({ children }) {
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="h-8 w-auto"
-                      src="/EVotingIcon.png"
-                      alt="Your Company"
+                      className="h-14 w-auto rounded-full"
+                      src="evote.png"
+                      alt="E-Vote System Logo"
                     />
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
@@ -55,8 +55,8 @@ export default function HomeNavBar({ children }) {
                           to={item.to}
                           className={classNames(
                             item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              ? "bg-indigo-900 text-white"
+                              : "text-gray-300 hover:bg-indigo-700 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
@@ -78,8 +78,8 @@ export default function HomeNavBar({ children }) {
                       as="a"
                       className={classNames(
                         item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          ? "bg-indigo-900 text-white"
+                          : "text-gray-300 hover:bg-indigo-700 hover:text-white",
                         "block rounded-md px-3 py-2 text-base font-medium"
                       )}
                       aria-current={item.current ? "page" : undefined}

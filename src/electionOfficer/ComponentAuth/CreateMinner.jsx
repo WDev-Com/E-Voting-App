@@ -105,7 +105,7 @@ const CreateMinnerPage = () => {
         <div>
           <label>Password:</label>
           <input
-            type="password"
+            type="text"
             name="password"
             value={formData.password}
             onChange={handleChange}

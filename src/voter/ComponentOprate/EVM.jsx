@@ -38,7 +38,7 @@ const VoterEVMPage = () => {
   };
   const handleVoteSubmit = () => {
     // Implement your vote submission logic here
-    //http://localhost:8080/Vote/CreatingVote
+    //http://localhost:8081/Vote/CreatingVote
     console.log("Vote Format:", vote);
     // You can dispatch an action to submit the vote to the server if needed
   };

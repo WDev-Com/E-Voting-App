@@ -4,7 +4,7 @@ export function createVoter(userData) {
   console.log("From API ", userData);
   return new Promise(async (resolve) => {
     const response = await fetch(
-      `http://localhost:8080/VoterAuth/signup-voter`,
+      `http://localhost:8081/VoterAuth/signup-voter`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -26,7 +26,7 @@ export function loginVoter({ username, password }) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/VoterAuth/login-voter`,
+        `http://localhost:8081/VoterAuth/login-voter`,
         {
           method: "POST",
           body: JSON.stringify({ username: username, password: password }),
@@ -54,7 +54,7 @@ export function checkVoter() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/VoterAuth/check-voter`
+        `http://localhost:8081/VoterAuth/check-voter`
       );
       if (response.ok) {
         const data = await response.json();
@@ -77,7 +77,7 @@ export function signOutVoter() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          `http://localhost:8080/VoterAuth/logoutVoter`
+          `http://localhost:8081/VoterAuth/logoutVoter`
         );
         if (response.ok) {
           resolve({ data: "success" });

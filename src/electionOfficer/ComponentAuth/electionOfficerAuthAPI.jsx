@@ -6,7 +6,7 @@ export function createEleCommission(userData) {
   console.log("From API ", userData);
   return new Promise(async (resolve) => {
     const response = await fetch(
-      `http://localhost:8080/EleCommissonAuth/signup-EleCommission`,
+      `http://localhost:8081/EleCommissonAuth/signup-EleCommission`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -27,7 +27,7 @@ export function createEleCommission(userData) {
 export function createMinner(userData) {
   return new Promise(async (resolve) => {
     const response = await fetch(
-      `http://localhost:8080/EleCommissonAuth/Create-minner`,
+      `http://localhost:8081/EleCommissonAuth/Create-minner`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -49,7 +49,7 @@ export function loginEleCommission({ username, password }) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommissonAuth/login-EleCommission`,
+        `http://localhost:8081/EleCommissonAuth/login-EleCommission`,
         {
           method: "POST",
           body: JSON.stringify({ username: username, password: password }),
@@ -76,7 +76,7 @@ export function checkEleCommission() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommissonAuth/check-EleCommission`
+        `http://localhost:8081/EleCommissonAuth/check-EleCommission`
       );
       if (response.ok) {
         const data = await response.json();
@@ -99,7 +99,7 @@ export function signOut() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          `http://localhost:8080/EleCommissonAuth/logoutEleCommission`
+          `http://localhost:8081/EleCommissonAuth/logoutEleCommission`
         );
         if (response.ok) {
           resolve({ data: "success" });

@@ -122,5 +122,5 @@ export const selectLoggedInVoterToken = (state) =>
   state.VoterAuth.loggedInVoterToken;
 export const selectVoterChecked = (state) => state.VoterAuth.uservoterChecked;
 export const selectVoter = (state) => state.VoterAuth.Voter;
-
+export const selectError = (state) => state.VoterAuth.error;
 export default VoterAuthSlice.reducer;

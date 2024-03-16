@@ -4,7 +4,7 @@ export function loginMinner({ username, password }) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/MinningAuth/login-minner`,
+        `http://localhost:8081/MinningAuth/login-minner`,
         {
           method: "POST",
           body: JSON.stringify({ username: username, password: password }),
@@ -32,7 +32,7 @@ export function checkMinner() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/MinningAuth/check-minner`
+        `http://localhost:8081/MinningAuth/check-minner`
       );
       if (response.ok) {
         const data = await response.json();
@@ -55,7 +55,7 @@ export function signOutMinner() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          `http://localhost:8080/MinningAuth/logoutMinner`
+          `http://localhost:8081/MinningAuth/logoutMinner`
         );
         if (response.ok) {
           resolve({ data: "success" });

@@ -100,4 +100,5 @@ export const selectLoggedInMinnerToken = (state) =>
 export const selectMinnerChecked = (state) =>
   state.MinnernAuth.userminnerChecked;
 export const selectMinner = (state) => state.MinnernAuth.Minner;
+export const selectError = (state) => state.MinnernAuth.error;
 export default MinnerAuthSlice.reducer;

@@ -123,5 +123,5 @@ export const selectLoggedInCandidateToken = (state) =>
 export const selectCandidateChecked = (state) =>
   state.CandidateAuth.usercandidateChecked;
 export const selectCandidate = (state) => state.CandidateAuth.Candidate;
-
+export const selectError = (state) => state.CandidateAuth.error;
 export default CandidateAuthSlice.reducer;

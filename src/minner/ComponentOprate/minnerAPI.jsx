@@ -5,7 +5,7 @@ export function getMinnerById({ id }) {
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      `http://localhost:8080/Minning/GetMinnerByID/` + id,
+      `http://localhost:8081/Minning/GetMinnerByID/` + id,
       {
         method: "POST",
         headers: { "content-type": "application/json" },

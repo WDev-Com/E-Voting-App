@@ -4,7 +4,7 @@ export function createCandidate(userData) {
   console.log("From API ", userData);
   return new Promise(async (resolve) => {
     const response = await fetch(
-      `http://localhost:8080/MemberGovtAuth/signup-candidate`,
+      `http://localhost:8081/MemberGovtAuth/signup-candidate`,
       {
         method: "POST",
         body: JSON.stringify(userData),
@@ -27,7 +27,7 @@ export function loginCandidate({ username, password }) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/MemberGovtAuth/login-candidate`,
+        `http://localhost:8081/MemberGovtAuth/login-candidate`,
         {
           method: "POST",
           body: JSON.stringify({ username: username, password: password }),
@@ -55,7 +55,7 @@ export function checkCandidate() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/MemberGovtAuth/check-candidate`
+        `http://localhost:8081/MemberGovtAuth/check-candidate`
       );
       if (response.ok) {
         const data = await response.json();
@@ -78,7 +78,7 @@ export function signOutCandidate() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
-          `http://localhost:8080/MemberGovtAuth/logoutCandidate`
+          `http://localhost:8081/MemberGovtAuth/logoutCandidate`
         );
         if (response.ok) {
           resolve({ data: "success" });

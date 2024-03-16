@@ -5,7 +5,7 @@ export function getVoterById({ id }) {
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      `http://localhost:8080/VoterOperation/GetVoterByID/` + id,
+      `http://localhost:8081/VoterOperation/GetVoterByID/` + id,
       {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -23,7 +23,7 @@ export function getAllCandidateOFConstituency({ consti }) {
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      `http://localhost:8080/VoterOperation/GetAllCandidateOFConstituency/` +
+      `http://localhost:8081/VoterOperation/GetAllCandidateOFConstituency/` +
         consti,
       {
         method: "GET",
@@ -41,7 +41,7 @@ export function createVote(VoteData, ID) {
   console.log("From API ", VoteData);
   return new Promise(async (resolve) => {
     const response = await fetch(
-      `http://localhost:8080/VoterOperation/CreatingVote` + ID,
+      `http://localhost:8081/VoterOperation/CreatingVote` + ID,
       {
         method: "POST",
         body: JSON.stringify(VoteData),

@@ -32,7 +32,7 @@ export function getEleCommission({ id }) {
   return new Promise(async (resolve) => {
     // console.log();
     const response = await fetch(
-      `http://localhost:8080/EleCommisson/getEleCommission/` + id,
+      `http://localhost:8081/EleCommisson/getEleCommission/` + id,
       {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -65,7 +65,7 @@ export const getAllCandidates = (pagination, filters) => {
       console.log("For Candidate queryString " + queryString);
       // Fetch candidates with pagination and filters
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/getAllCandidate?${queryString}`
+        `http://localhost:8081/EleCommisson/getAllCandidate?${queryString}`
       );
       const data = await response.json();
       const totalCandidatesCOUNT = response.headers.get(
@@ -98,7 +98,7 @@ export const getAllMinners = (pagination, filters) => {
 
       // Fetch minners with pagination and filters
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/getAllMinner${queryString}`
+        `http://localhost:8081/EleCommisson/getAllMinner${queryString}`
       );
       const data = await response.json();
       const totalItems = response.headers.get("X-Total-Count");
@@ -131,7 +131,7 @@ export const getAllVoters = (pagination, filter) => {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/getAllVoter${queryString}`
+        `http://localhost:8081/EleCommisson/getAllVoter${queryString}`
       );
       const data = await response.json();
       const totalVoterS = response.headers.get("X-TotalVoter-Count");
@@ -151,7 +151,7 @@ export function updateVoterRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/UpdateVoterRole/` + id,
+        `http://localhost:8081/EleCommisson/UpdateVoterRole/` + id,
         {
           method: "PATCH",
           body: JSON.stringify({ role: roleD }),
@@ -175,7 +175,7 @@ export function updateCandidateRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/GiveRollToCandidate/` + id,
+        `http://localhost:8081/EleCommisson/GiveRollToCandidate/` + id,
         {
           method: "PATCH",
           body: JSON.stringify({ role: roleD }),
@@ -200,7 +200,7 @@ export function updateMinnerRole({ id, roleD }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/GiveRollToMinner/` + id,
+        `http://localhost:8081/EleCommisson/GiveRollToMinner/` + id,
         {
           method: "PATCH",
           body: JSON.stringify({ role: roleD }),
@@ -224,7 +224,7 @@ export function deleteMinner({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/RemoveMinner/` + id,
+        `http://localhost:8081/EleCommisson/RemoveMinner/` + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -254,7 +254,7 @@ export function deleteCandidate({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/RemoveCandidate/` + id,
+        `http://localhost:8081/EleCommisson/RemoveCandidate/` + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
@@ -280,7 +280,7 @@ export function deleteVoter({ id }) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/EleCommisson/RemoveVoter/` + id,
+        `http://localhost:8081/EleCommisson/RemoveVoter/` + id,
         {
           method: "DELETE",
           headers: { "content-type": "application/json" },
