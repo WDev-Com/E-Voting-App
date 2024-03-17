@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getVoterById, getAllCandidateOFConstituency } from "./voterAPI";
+import {
+  getVoterById,
+  getAllCandidateOFConstituency,
+  updateVoter,
+} from "./voterAPI";
 const initialState = {
   value: 0,
   status: "idle",
@@ -14,6 +18,15 @@ export const getVoterByIdAsync = createAsyncThunk(
   async (obj) => {
     const response = await getVoterById(obj);
     // console.log(filter);
+    return response.data;
+  }
+);
+
+export const updateVoterAsync = createAsyncThunk(
+  "voter/updateVoter",
+  async (data) => {
+    // console.log(data);
+    const response = await updateVoter(data);
     return response.data;
   }
 );
@@ -80,7 +93,19 @@ const voterSlice = createSlice({
             action.payload.CandidateOFConstituencyDatas;
           // console.log(state.voterData);
         }
-      );
+      )
+      ////////////////// Update Operation
+
+      .addCase(updateVoterAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateVoterAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.VoterData.findIndex(
+          (voter) => voter.id === action.payload.id
+        );
+        state.VoterData[index] = action.payload;
+      });
   },
 });
 

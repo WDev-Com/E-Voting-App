@@ -13,6 +13,7 @@ import {
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import "./CSS/EVM.css";
+import NavBarVoter from "../Navigations/VoterNavigation";
 const VoterEVMPage = () => {
   const dispatch = useDispatch();
   const currentLoggedVoter = useSelector(selectLoggedInVoterToken);
@@ -45,43 +46,42 @@ const VoterEVMPage = () => {
 
   return (
     <>
-      Hello Voter
-      {currentVoter ? (
-        <div>
-          <h2>Candidate OF Constituency Page</h2>
-          {currentVoter ? (
-            <div>
-              {CandidateOFConstituency.map((candidate) => (
-                <div key={candidate.id} className="candidate-card">
-                  <input
-                    type="radio"
-                    id={`candidate-${candidate.CandidateID}`}
-                    name="selectedCandidate"
-                    value={candidate.CandidateID}
-                    checked={selectedCandidate === candidate.CandidateID}
-                    onChange={handleCandidateChange}
-                  />
-                  <label htmlFor={`candidate-${candidate.CandidateID}`}>
-                    <h3>Name : {candidate.name}</h3>
-                    <p>Party : {candidate.Party}</p>
-                    {/* Add more details as needed */}
-                  </label>
-                </div>
-              ))}
-              <button type="button" onClick={handleVoteSubmit}>
-                Submit Vote
-              </button>
-            </div>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
-      ) : (
-        "Re-Check"
-      )}
-      <Link to="/VoterProfile">
-        <button>Voter Home</button>
-      </Link>
+      <NavBarVoter>
+        Hello Voter
+        {currentVoter ? (
+          <div>
+            <h2>Candidate OF Constituency Page</h2>
+            {currentVoter ? (
+              <div>
+                {CandidateOFConstituency.map((candidate) => (
+                  <div key={candidate.id} className="candidate-card">
+                    <input
+                      type="radio"
+                      id={`candidate-${candidate.CandidateID}`}
+                      name="selectedCandidate"
+                      value={candidate.CandidateID}
+                      checked={selectedCandidate === candidate.CandidateID}
+                      onChange={handleCandidateChange}
+                    />
+                    <label htmlFor={`candidate-${candidate.CandidateID}`}>
+                      <h3>Name : {candidate.name}</h3>
+                      <p>Party : {candidate.Party}</p>
+                      {/* Add more details as needed */}
+                    </label>
+                  </div>
+                ))}
+                <button type="button" onClick={handleVoteSubmit}>
+                  Submit Vote
+                </button>
+              </div>
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+        ) : (
+          "Re-Check"
+        )}
+      </NavBarVoter>
     </>
   );
 };

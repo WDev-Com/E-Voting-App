@@ -5,7 +5,8 @@ export function updateElectionCommissioner(data) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `/EleCommisson/UpdateElectionCommissioner/` + data.id,
+        `http://localhost:8081/EleCommisson/UpdateElectionCommissioner/` +
+          data.id,
         {
           method: "PATCH",
           body: JSON.stringify(data),

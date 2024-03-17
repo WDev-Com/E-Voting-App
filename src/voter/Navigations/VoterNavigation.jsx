@@ -3,24 +3,21 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signOutAsync } from "../ComponentAuth/electionOfficerAuthSlice";
-import { selectElectionCommissner } from "../ComponentOprate/electionOfficerSlice";
+import { signOutVoterAsync } from "../ComponentAuth/voterAuthSlice";
+import { selectVoterData } from "../ComponentOprate/voterSlice";
 
 const navigation = [
-  { name: "HomePage", to: "/ElectionCommissionPage", current: false },
-  { name: "Voters", to: "/ViewVoter", current: false },
-  { name: "Candidates", to: "/ViewCandidate", current: false },
-  { name: "Minners", to: "/ViewMinner", current: false },
-  { name: "Create Minner", to: "/CreateMinner", current: false },
+  { name: "HomePage", to: "/VoterProfile", current: false },
+  { name: "EVM", to: "/VoteOnEVM", current: false },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NavBar({ children }) {
+export default function NavBarVoter({ children }) {
   const dispatch = useDispatch();
-  const currentElectionCommissioner = useSelector(selectElectionCommissner);
+  const currentVoter = useSelector(selectVoterData);
   return (
     <div className="min-h-full">
       <Disclosure as="nav" className="bg-gray-800">
@@ -77,7 +74,7 @@ export default function NavBar({ children }) {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src={currentElectionCommissioner.profileimages}
+                          src={currentVoter.profileimages}
                           alt=""
                         />
                       </Menu.Button>
@@ -96,7 +93,7 @@ export default function NavBar({ children }) {
                           {({ active }) => (
                             <Link
                               onClick={() => {
-                                dispatch(signOutAsync());
+                                dispatch(signOutVoterAsync());
                               }}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -116,20 +113,21 @@ export default function NavBar({ children }) {
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigation.map((item) => (
-                  <Disclosure.Button
-                    key={item.name}
-                    as="a"
-                    to={item.to}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "block rounded-md px-3 py-2 text-base font-medium"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
-                  >
-                    {item.name}
-                  </Disclosure.Button>
+                  <Link to={item.to}>
+                    <Disclosure.Button
+                      key={item.name}
+                      as="a"
+                      className={classNames(
+                        item.current
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "block rounded-md px-3 py-2 text-base font-medium"
+                      )}
+                      aria-current={item.current ? "page" : undefined}
+                    >
+                      {item.name}
+                    </Disclosure.Button>
+                  </Link>
                 ))}
               </div>
             </Disclosure.Panel>

@@ -103,8 +103,10 @@ export function signOut() {
         );
         if (response.ok) {
           resolve({ data: "success" });
+          toast.success("Sign out Successfully");
         } else {
           const error = await response.text();
+          toast.error("Sign out Failed");
           reject(error);
         }
       } catch (error) {

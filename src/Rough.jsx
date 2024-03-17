@@ -1,6 +1,6 @@
 let newFilter = {};
 
-function fuck(section, option) {
+function Check(section, option) {
   if (newFilter[section]) {
     // If newFilter[section] already exists and is an array, push to it
     if (Array.isArray(newFilter[section])) {
@@ -15,11 +15,11 @@ function fuck(section, option) {
   }
 }
 
-fuck("ele", "lap");
+Check("ele", "lap");
 console.log(newFilter);
 
-fuck("ele", "pap");
+Check("ele", "pap");
 console.log(newFilter);
 
-fuck("tel", "pap");
+Check("tel", "pap");
 console.log(newFilter.ele);

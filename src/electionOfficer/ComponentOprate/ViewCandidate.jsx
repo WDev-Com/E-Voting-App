@@ -13,7 +13,7 @@ import NavBar from "../Navigations/ElectionComNav";
 
 const CandidatePage = () => {
   const dispatch = useDispatch();
-  let pagination = { page: 1, pageSize: 2 };
+  let pagination = { page: 1, pageSize: 5 };
   let filter = { role: "" };
   // constituency: "Lanja"; party: "BJP" user
   const candidates = useSelector(selectCandidates);
@@ -44,8 +44,10 @@ const CandidatePage = () => {
     <>
       <NavBar>
         <div className="container mx-auto p-4">
-          <h1 className="text-4xl font-bold mb-4">Hello Candidate</h1>
-          <div className="mb-4">{candidatestotalcount}</div>
+          <h3 className="text-2xl font-bold mb-4">All Candidate</h3>
+          <div className="mb-4 font-bold">
+            Total Candidate Count : {candidatestotalcount}
+          </div>
           <div>
             {candidates.map((ele) => (
               <div
@@ -71,32 +73,9 @@ const CandidatePage = () => {
             ))}
           </div>
         </div>
-        <Link to="/ElectionCommissionPage">
-          <button>Home</button>
-        </Link>
       </NavBar>
     </>
   );
 };
 
 export default CandidatePage;
-/*
-   Hello Candidate
-      <div>{candidatestotalcount}</div>
-      <div>
-        {candidates.map((ele) => (
-          <div key={ele.id}>
-            <div>
-              <p>Candidate ID: {ele.CandidateID}</p>
-              <p>Name: {ele.name}</p>
-              <p>Constituency: {ele.Constituency}</p>
-              <p>Party: {ele.Party}</p>
-              <p>Email: {ele.email}</p>
-            </div>
-            <br></br>
-            <br></br>
-            <br></br>
-          </div>
-        ))}
-      </div>
-*/

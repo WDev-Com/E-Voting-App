@@ -123,14 +123,6 @@ const LoginCandidatePage = () => {
                 Sign Up Candidate
               </Link>
             </p>
-            <p className="mt-10 text-center text-sm text-gray-500">
-              <Link
-                to="/ElectionCommissionLoginPage"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Home
-              </Link>
-            </p>
           </div>
         </div>
       </HomeNavBar>
