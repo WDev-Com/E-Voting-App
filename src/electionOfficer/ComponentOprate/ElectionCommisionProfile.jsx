@@ -18,7 +18,7 @@ const ElectionCommissionPage = () => {
   const dispatch = useDispatch();
   const currentElectionCommissioner = useSelector(selectElectionCommissner);
   const currentUserID = useSelector(selectLoggedInUserToken);
-  console.log(currentElectionCommissioner);
+  // console.log(currentElectionCommissioner);
   // console.log("currentUser :======== ", currentUserID);
   const electionCommisionNew = {
     id: currentUserID,
@@ -64,7 +64,7 @@ const ElectionCommissionPage = () => {
     imageSizeInKB = imageSizeInBytes / 1024;
     const imageSizeInMB = imageSizeInKB / 1024;
   }
-  console.log("imageSizeInKB : ", imageSizeInKB);
+  // console.log("imageSizeInKB : ", imageSizeInKB);
   if (imageSizeInKB > 80) {
     setPreviewUrl(null);
     toast.error("Please Select Image Below the Size of 80 Kb");
@@ -92,7 +92,7 @@ const ElectionCommissionPage = () => {
 
   const [editStatus, setEditstatus] = useState(false);
   function handleedit() {
-    setEditstatus(true);
+    setEditstatus(editStatus ? false : true);
   }
   return (
     <NavBar>
@@ -161,13 +161,26 @@ const ElectionCommissionPage = () => {
                             Edit
                           </button>
                         ) : (
-                          <button
-                            className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-                            type="submit"
-                            id="submit"
-                          >
-                            SUBMIT
-                          </button>
+                          <>
+                            <button
+                              className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                              type="submit"
+                              id="submit"
+                            >
+                              SUBMIT
+                            </button>
+                            <button
+                              className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                              type="submit"
+                              id="submit"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleedit();
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>

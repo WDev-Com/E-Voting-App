@@ -16,7 +16,7 @@ export const loginMinnerAsync = createAsyncThunk(
   async (loginInfo, { rejectWithValue }) => {
     try {
       const response = await loginMinner(loginInfo);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -30,7 +30,7 @@ export const checkMinnerAsync = createAsyncThunk(
   async () => {
     try {
       const response = await checkMinner();
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -81,7 +81,7 @@ const MinnerAuthSlice = createSlice({
       })
       .addCase(checkMinnerAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInMinnerToken = action.payload; // Check the correct property
+        state.loggedInMinnerToken = action.payload.id; // Check the correct property
         // console.log(
         //   "Minner Auth Slice: ",
         //   state.loggedInMinnerToken

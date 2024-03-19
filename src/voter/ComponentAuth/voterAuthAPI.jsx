@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export function createVoter(userData) {
-  console.log("From API ", userData);
+  // console.log("From API ", userData);
   return new Promise(async (resolve) => {
     const response = await fetch(
       `http://localhost:8081/VoterAuth/signup-voter`,
@@ -35,7 +35,7 @@ export function loginVoter({ username, password }) {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log({ data });
+        // console.log({ data });
         toast.success("Login successful");
         resolve({ data });
       } else {
@@ -58,7 +58,7 @@ export function checkVoter() {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Check Auth data : ", data);
+        // console.log("Check Auth data : ", data);
         resolve({ data });
       } else {
         const error = await response.text();

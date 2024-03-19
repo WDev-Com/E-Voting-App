@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getCandidateById } from "./CandidateAPI";
+import { getCandidateById, updateCandidate } from "./CandidateAPI";
 const initialState = {
   value: 0,
   status: "idle",
@@ -16,14 +16,14 @@ export const getCandidateByIdAsync = createAsyncThunk(
   }
 );
 
-// export const updateMinnerRoleAsync = createAsyncThunk(
-//   "electionCommision/updateMinnerRole",
-//   async (data) => {
-//     // console.log(data);
-//     const response = await updateMinnerRole(data);
-//     return response.data;
-//   }
-// );
+export const updateCandidateAsync = createAsyncThunk(
+  "voter/updateCandidate",
+  async (data) => {
+    // console.log(data);
+    const response = await updateCandidate(data);
+    return response.data;
+  }
+);
 
 const candidateSlice = createSlice({
   //When we use state in createSlice it only define for this mwthod
@@ -41,6 +41,18 @@ const candidateSlice = createSlice({
         state.status = "idle";
         state.candidateData = action.payload.CandidateData;
         // console.log(state.minner);
+      })
+      ////////////////// Update Operation
+
+      .addCase(updateCandidateAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateCandidateAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.candidateData.findIndex(
+          (candidate) => candidate.id === action.payload.id
+        );
+        state.candidateData[index] = action.payload;
       });
   },
 });

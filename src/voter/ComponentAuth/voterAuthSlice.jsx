@@ -20,7 +20,7 @@ const initialState = {
 export const createVoterAsync = createAsyncThunk(
   "VoterAuth/createVoter",
   async (userData) => {
-    console.log("From Slice : ", userData);
+    // console.log("From Slice : ", userData);
     const response = await createVoter(userData);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
@@ -32,7 +32,7 @@ export const loginVoterAsync = createAsyncThunk(
   async (loginInfo, { rejectWithValue }) => {
     try {
       const response = await loginVoter(loginInfo);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -46,7 +46,7 @@ export const checkVoterAsync = createAsyncThunk(
   async () => {
     try {
       const response = await checkVoter();
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);

@@ -1,29 +1,25 @@
 export const selectError = (state) => state.MinnernAuth.error;
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getVoterByIdAsync,
-  selectVoterData,
-  updateVoterAsync,
-} from "./voterSlice";
-import {
-  selectLoggedInVoterToken,
-  signOutVoterAsync,
-} from "../ComponentAuth/voterAuthSlice";
 import { toast } from "react-toastify";
 import { BiImageAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import NavBarVoter from "../Navigations/VoterNavigation";
-const VoterProfile = () => {
+import { selectLoggedInMinnerToken } from "../ComponentAuth/minnerAuthSlice";
+import {
+  getMinnerByIdsync,
+  selectMinnerData,
+  updateMinnerAsync,
+} from "./minnerSlice";
+import MinnerNav from "../Navigations/MinnerNavigation";
+const MinerProfile = () => {
   const dispatch = useDispatch();
-  const currentVoter = useSelector(selectVoterData);
-  const currentVoterID = useSelector(selectLoggedInVoterToken);
+  const currentMinner = useSelector(selectMinnerData);
+  const loginUserToken = useSelector(selectLoggedInMinnerToken);
+  console.log("currentMinner.MinnerID : ", currentMinner.MinnerID);
   useEffect(() => {
-    dispatch(getVoterByIdAsync({ id: currentVoterID }));
-    // dispatch(updateElectionCommissionerAsync(electionCommisionNew));
+    dispatch(getMinnerByIdsync({ id: loginUserToken }));
   }, []);
-
   //TODO: We will add payment section when we work on backend.
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -32,7 +28,6 @@ const VoterProfile = () => {
   const {
     register,
     handleSubmit,
-
     reset,
     setValue,
     formState: { errors },
@@ -64,21 +59,21 @@ const VoterProfile = () => {
   }
   // @@@@@@@@@@@@ Image Processing @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
   const handleEditProfile = (profileUpdate) => {
-    const newUser = { ...currentVoter }; // for shallow copy issue
+    const newUser = { ...currentMinner }; // for shallow copy issue
     newUser.name = profileUpdate.name;
     newUser.username = profileUpdate.username;
     newUser.email = profileUpdate.email;
     newUser.profileimages = previewUrl;
-    // console.log(newUser);
-    dispatch(updateVoterAsync({ ...newUser }));
+    console.log(newUser);
+    dispatch(updateMinnerAsync({ ...newUser }));
   };
 
   const [editStatus, setEditstatus] = useState(false);
   function handleedit() {
-    setEditstatus(true);
+    setEditstatus(editStatus ? false : true);
   }
   return (
-    <NavBarVoter>
+    <MinnerNav>
       <div>
         {" "}
         <div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -144,13 +139,26 @@ const VoterProfile = () => {
                             Edit
                           </button>
                         ) : (
-                          <button
-                            className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-                            type="submit"
-                            id="submit"
-                          >
-                            SUBMIT
-                          </button>
+                          <>
+                            <button
+                              className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                              type="submit"
+                              id="submit"
+                            >
+                              SUBMIT
+                            </button>
+                            <button
+                              className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                              type="submit"
+                              id="submit"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleedit();
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>
@@ -160,7 +168,7 @@ const VoterProfile = () => {
                           {editStatus === false ? (
                             <img
                               alt="..."
-                              src={currentVoter.profileimages}
+                              src={currentMinner.profileimages}
                               //-m-16 -ml-20 lg:-ml-16
                               className="relative shadow-xl h-40 w-40 sm:h-30 sm:w-30 rounded-full align-middle border-none"
                             />
@@ -219,7 +227,9 @@ const VoterProfile = () => {
                             })}
                             className=" leading-normal text-gray-700  rounded-md mb-2"
                             placeholder={
-                              currentVoter.name ? currentVoter.name : "New User"
+                              currentMinner.name
+                                ? currentMinner.name
+                                : "New User"
                             }
                           ></input>
                           <br></br>
@@ -228,7 +238,7 @@ const VoterProfile = () => {
                       ) : (
                         <h3 className="text-2xl font-semibold leading-normal text-gray-700 mb-2">
                           Name :{" "}
-                          {currentVoter.name ? currentVoter.name : "New User"}
+                          {currentMinner.name ? currentMinner.name : "New User"}
                         </h3>
                       )}
                       {/* -------------- Username ------------------ */}
@@ -245,8 +255,8 @@ const VoterProfile = () => {
                             })}
                             className=" leading-normal text-gray-700  rounded-md mb-2"
                             placeholder={
-                              currentVoter.username
-                                ? currentVoter.username
+                              currentMinner.username
+                                ? currentMinner.username
                                 : "username"
                             }
                           ></input>
@@ -256,54 +266,24 @@ const VoterProfile = () => {
                       ) : (
                         <h3 className="text-xl font-semibold leading-normal text-gray-700 mb-2">
                           Username :{" "}
-                          {currentVoter.username
-                            ? currentVoter.username
+                          {currentMinner.username
+                            ? currentMinner.username
                             : "New User"}
                         </h3>
                       )}
-                      {/* --------- OffierID ----------------------------- */}
+                      {/* --------- MinnerID ----------------------------- */}
                       {
                         <h3 className="text-xl font-semibold leading-normal text-gray-700 mb-2">
                           Minner ID :{" "}
-                          {currentVoter.MinnerID
-                            ? currentVoter.MinnerID
+                          {currentMinner.MinnerID
+                            ? currentMinner.MinnerID
                             : "Haven't Assigned....."}
                         </h3>
                       }
                       {/*------- Role----------- */}{" "}
-                      {currentVoter.role === "voter" && (
+                      {currentMinner.role === "minner" && (
                         <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">
-                          Role : {currentVoter.role}
-                        </h3>
-                      )}
-                      {/*------- Constituency ----------- */}{" "}
-                      {editStatus === true ? (
-                        <>
-                          <label>Constituency : </label>
-                          <br></br>
-                          <input
-                            type="text"
-                            name="Constituency "
-                            id="Constituency "
-                            {...register("Constituency ", {
-                              required: "Constituency  is required",
-                            })}
-                            className=" leading-normal text-gray-700  rounded-md mb-2"
-                            placeholder={
-                              currentVoter.Constituency
-                                ? currentVoter.Constituency
-                                : "Constituency"
-                            }
-                          ></input>
-                          <br></br>
-                          <br></br>
-                        </>
-                      ) : (
-                        <h3 className="text-xl my-5 font-bold tracking-tight text-gray-600">
-                          Constituency :{" "}
-                          {currentVoter.Constituency
-                            ? currentVoter.Constituency
-                            : "Constituency"}
+                          Role : {currentMinner.role}
                         </h3>
                       )}
                       {/* --------- Email ----------------------------- */}
@@ -320,8 +300,8 @@ const VoterProfile = () => {
                             })}
                             className=" leading-normal text-gray-700  rounded-md mb-2"
                             placeholder={
-                              currentVoter.email
-                                ? currentVoter.email
+                              currentMinner.email
+                                ? currentMinner.email
                                 : "your email"
                             }
                           ></input>
@@ -330,37 +310,7 @@ const VoterProfile = () => {
                         </>
                       ) : (
                         <h3 className="text-xl my-5 font-bold tracking-tight text-orange-400">
-                          Email : {currentVoter.email}
-                        </h3>
-                      )}
-                      {/*------- addresses  ----------- */}{" "}
-                      {editStatus === true ? (
-                        <>
-                          <label>Address : </label>
-                          <br></br>
-                          <input
-                            type="text"
-                            name="addresses  "
-                            id="addresses  "
-                            {...register("addresses", {
-                              required: "addresses   is required",
-                            })}
-                            className=" leading-normal text-gray-700  rounded-md mb-2"
-                            placeholder={
-                              currentVoter.addresses
-                                ? currentVoter.addresses
-                                : "addresses "
-                            }
-                          ></input>
-                          <br></br>
-                          <br></br>
-                        </>
-                      ) : (
-                        <h3 className="text-xl my-5 font-bold tracking-tight text-gray-600">
-                          Address :{" "}
-                          {currentVoter.addresses
-                            ? currentVoter.addresses
-                            : "addresses"}
+                          Email : {currentMinner.email}
                         </h3>
                       )}
                     </div>
@@ -370,9 +320,9 @@ const VoterProfile = () => {
             </section>
           </main>
         </div>
-      </div>{" "}
-    </NavBarVoter>
+      </div>
+    </MinnerNav>
   );
 };
 
-export default VoterProfile;
+export default MinerProfile;

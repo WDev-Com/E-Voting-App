@@ -13,7 +13,7 @@ export function loginMinner({ username, password }) {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log({ data });
+        // console.log({ data });
         toast.success("Login successful");
         resolve({ data });
       } else {
@@ -36,7 +36,7 @@ export function checkMinner() {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Check Auth data : ", data);
+        // console.log("Check Auth data : ", data);
         resolve({ data });
       } else {
         const error = await response.text();

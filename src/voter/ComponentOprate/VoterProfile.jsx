@@ -56,7 +56,7 @@ const VoterProfile = () => {
     imageSizeInKB = imageSizeInBytes / 1024;
     const imageSizeInMB = imageSizeInKB / 1024;
   }
-  console.log("imageSizeInKB : ", imageSizeInKB);
+  // console.log("imageSizeInKB : ", imageSizeInKB);
   if (imageSizeInKB > 80) {
     setPreviewUrl(null);
     toast.error("Please Select Image Below the Size of 80 Kb");
@@ -70,13 +70,13 @@ const VoterProfile = () => {
     newUser.Constituency = profileUpdate.Constituency;
     newUser.addresses = profileUpdate.addresses;
     newUser.profileimages = previewUrl;
-    console.log(newUser);
+    // console.log(newUser);
     dispatch(updateVoterAsync({ ...newUser }));
   };
 
   const [editStatus, setEditstatus] = useState(false);
   function handleedit() {
-    setEditstatus(true);
+    setEditstatus(editStatus ? false : true);
   }
   return (
     <NavBarVoter>
@@ -145,13 +145,26 @@ const VoterProfile = () => {
                             Edit
                           </button>
                         ) : (
-                          <button
-                            className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-                            type="submit"
-                            id="submit"
-                          >
-                            SUBMIT
-                          </button>
+                          <>
+                            <button
+                              className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                              type="submit"
+                              id="submit"
+                            >
+                              SUBMIT
+                            </button>
+                            <button
+                              className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                              type="submit"
+                              id="submit"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleedit();
+                              }}
+                            >
+                              Cancel
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>
@@ -271,10 +284,13 @@ const VoterProfile = () => {
                             : "Haven't Assigned....."}
                         </h3>
                       }
-                      {/*------- Role----------- */}{" "}
+                      {/*------- Authority----------- */}{" "}
                       {currentVoter.role === "voter" && (
                         <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">
-                          Authority : {currentVoter.authority}
+                          Authority :{" "}
+                          {currentVoter.authority
+                            ? currentVoter.authority
+                            : "Haven't Assigned....."}
                         </h3>
                       )}
                       {/*------- Role----------- */}{" "}

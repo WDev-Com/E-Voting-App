@@ -12,7 +12,7 @@ export function createCandidate(userData) {
       }
     );
     const data = await response.json();
-    console.log(response.ok);
+    // console.log(response.ok);
     if (response.ok) {
       toast.success("SignUp successfully");
     } else {
@@ -36,7 +36,7 @@ export function loginCandidate({ username, password }) {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log({ data });
+        // console.log({ data });
         toast.success("Login successful");
         resolve({ data });
       } else {
@@ -59,7 +59,7 @@ export function checkCandidate() {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Check Auth data : ", data);
+        // console.log("Check Auth data : ", data);
         resolve({ data });
       } else {
         const error = await response.text();

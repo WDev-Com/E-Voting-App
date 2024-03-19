@@ -21,7 +21,7 @@ const initialState = {
 export const createEleCommissionAsync = createAsyncThunk(
   "electionCommisionAuth/createEleCommission",
   async (userData) => {
-    console.log("From Slice : ", userData);
+    // console.log("From Slice : ", userData);
     const response = await createEleCommission(userData);
     // The value we return becomes the `fulfilled` action payload
 
@@ -43,7 +43,7 @@ export const loginEleCommissionAsync = createAsyncThunk(
   async (loginInfo, { rejectWithValue }) => {
     try {
       const response = await loginEleCommission(loginInfo);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error);

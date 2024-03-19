@@ -35,6 +35,7 @@ import VoterSignUpForm from "./voter/ComponentAuth/SignUpVoter";
 import LoginVoterPage from "./voter/ComponentAuth/LoginVoter";
 import { selectVoterChecked } from "./voter/ComponentAuth/voterAuthSlice";
 import VoterEVMPage from "./voter/ComponentOprate/EVM";
+import MinerCountVote from "./minner/ComponentOprate/MinerCountVote";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -97,6 +98,11 @@ const router = createBrowserRouter([
     path: "/MinnerLogin",
     element: <LoginMinnerPage></LoginMinnerPage>,
   },
+
+  {
+    path: "/MinerCountVote",
+    element: <MinerCountVote></MinerCountVote>,
+  },
   {
     path: "/CandidateProfile",
     element: (
@@ -149,8 +155,8 @@ function App() {
   useEffect(() => {
     dispatch(checkEleCommissionAsync());
   }, [dispatch, user]);
-  console.log("CheckEleCommission User : " + user);
-  console.log("Logged In User Token : " + loggedInUserToken);
+  //console.log("CheckEleCommission User : " + user);
+  //console.log("Logged In User Token : " + loggedInUserToken);
 
   return (
     <>

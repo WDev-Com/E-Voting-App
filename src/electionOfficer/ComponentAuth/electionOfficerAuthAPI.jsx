@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 ////////****************AUTH ***************//////////////////////////////////////////////////////////////////////////
 
 export function createEleCommission(userData) {
-  console.log("From API ", userData);
+  // console.log("From API ", userData);
   return new Promise(async (resolve) => {
     const response = await fetch(
       `http://localhost:8081/EleCommissonAuth/signup-EleCommission`,
@@ -58,7 +58,7 @@ export function loginEleCommission({ username, password }) {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log({ data });
+        // console.log({ data });
         toast.success("Login successful");
         resolve({ data });
       } else {
@@ -80,7 +80,7 @@ export function checkEleCommission() {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log("Check Auth data : ", data);
+        // console.log("Check Auth data : ", data);
         resolve({ data });
       } else {
         const error = await response.text();

@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export function updateElectionCommissioner(data) {
-  console.log("updateElectionCommissioner", data);
+  // console.log("updateElectionCommissioner", data);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
@@ -14,7 +14,7 @@ export function updateElectionCommissioner(data) {
         }
       );
       const data2 = await response.json();
-      console.log("Response from server:", data2); // Add this line to log the response
+      // console.log("Response from server:", data2); // Add this line to log the response
       if (response.ok) {
         toast.success("Update Successful");
       }
@@ -63,7 +63,7 @@ export const getAllCandidates = (pagination, filters) => {
           queryString += `&${key}=${filters[key]}`;
         }
       }
-      console.log("For Candidate queryString " + queryString);
+      // console.log("For Candidate queryString " + queryString);
       // Fetch candidates with pagination and filters
       const response = await fetch(
         `http://localhost:8081/EleCommisson/getAllCandidate?${queryString}`

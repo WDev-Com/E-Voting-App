@@ -41,7 +41,7 @@ export function getAllCandidateOFConstituency({ consti }) {
 }
 
 export function createVote(VoteData, ID) {
-  console.log("From API ", VoteData);
+  // console.log("From API ", VoteData);
   return new Promise(async (resolve) => {
     const response = await fetch(
       `http://localhost:8081/VoterOperation/CreatingVote` + ID,
@@ -64,7 +64,7 @@ export function createVote(VoteData, ID) {
 }
 
 export function updateVoter(data) {
-  console.log("updateVoter", data);
+  // console.log("updateVoter", data);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
@@ -76,7 +76,7 @@ export function updateVoter(data) {
         }
       );
       const updatedData = await response.json();
-      console.log("Response from server:", updatedData); // Add this line to log the response
+      // console.log("Response from server:", updatedData); // Add this line to log the response
       if (response.ok) {
         toast.success("Update Successful");
       }
