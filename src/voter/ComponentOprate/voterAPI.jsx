@@ -15,7 +15,7 @@ export function getVoterById({ id }) {
       }
     );
     const dataA = await response.json();
-    console.log(dataA);
+    // console.log(dataA);
     // console.log("Fetched Top Produts:", data); // Add this line
     resolve({ data: { voterDatas: dataA } });
   });

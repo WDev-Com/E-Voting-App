@@ -5,7 +5,7 @@ import {
   getAllCandidates,
   getAllMinners,
   getAllVoters,
-  updateVoterRole,
+  updateVoterIdentity,
   updateCandidateRole,
   updateMinnerRole,
   deleteMinner,
@@ -23,6 +23,7 @@ const initialState = {
   candidates: [],
   totalcandidates: 0,
   error: null,
+  voterpage: 1,
 };
 
 export const getEleCommissionAsync = createAsyncThunk(
@@ -57,6 +58,7 @@ export const getAllCandidatessAsync = createAsyncThunk(
 export const getAllVotersAsync = createAsyncThunk(
   "electionCommision/getAllVoters",
   async ({ pagination, filter }) => {
+    // console.log("Slice==========>", pagination, filter);
     const response = await getAllVoters(pagination, filter);
     // console.log("pagination, filter", pagination, filter);
     return response.data;
@@ -89,10 +91,10 @@ export const updateCandidateRoleAsync = createAsyncThunk(
   }
 );
 
-export const updateVoterRoleAsync = createAsyncThunk(
-  "electionCommision/updateVoterRole",
+export const updateVoterIdentityAsync = createAsyncThunk(
+  "electionCommision/updateVoterIdentity",
   async (data) => {
-    const response = await updateVoterRole(data);
+    const response = await updateVoterIdentity(data);
     return response.data;
   }
 );
@@ -118,6 +120,7 @@ export const deleteCandidateAsync = createAsyncThunk(
 export const deleteVoterAsync = createAsyncThunk(
   "electionCommision/deleteVoter",
   async (data) => {
+    // console.log("ID ", data);
     const response = await deleteVoter(data);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
@@ -128,7 +131,12 @@ const electionCommisionSlice = createSlice({
   //When we use state in createSlice it only define for this mwthod
   name: "electionCommision",
   initialState,
-  reducers: {},
+  reducers: {
+    handlePages: (state, action) => {
+      state.voterpage = action.payload;
+      // console.log("Payload : ", action.payload);
+    },
+  },
   extraReducers(builder) {
     builder
       //////////////////// Check all payloads correctly before running
@@ -201,11 +209,12 @@ const electionCommisionSlice = createSlice({
         state.candidates[index] = action.payload;
       })
 
-      .addCase(updateVoterRoleAsync.pending, (state) => {
+      .addCase(updateVoterIdentityAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateVoterRoleAsync.fulfilled, (state, action) => {
+      .addCase(updateVoterIdentityAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log(action.payload);
         const index = state.Voters.findIndex(
           (item) => item.id === action.payload.id
         );
@@ -249,6 +258,8 @@ const electionCommisionSlice = createSlice({
 
 export const selectElectionCommissner = (state) =>
   state.electionCommision.electioncommissner;
+export const selectVoterPage = (state) => state.electionCommision.voterpage;
+export const { handlePages } = electionCommisionSlice.actions;
 export const selectVoters = (state) => state.electionCommision.Voters;
 export const selectTotalVoters = (state) => state.electionCommision.totalvoters;
 export const selectMiners = (state) => state.electionCommision.miners;

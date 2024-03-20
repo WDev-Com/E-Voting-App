@@ -300,35 +300,12 @@ const VoterProfile = () => {
                         </h3>
                       )}
                       {/*------- Constituency ----------- */}{" "}
-                      {editStatus === true ? (
-                        <>
-                          <label>Constituency : </label>
-                          <br></br>
-                          <input
-                            type="text"
-                            name="Constituency "
-                            id="Constituency "
-                            {...register("Constituency ", {
-                              required: "Constituency  is required",
-                            })}
-                            className=" leading-normal text-gray-700  rounded-md mb-2"
-                            placeholder={
-                              currentVoter.Constituency
-                                ? currentVoter.Constituency
-                                : "Constituency"
-                            }
-                          ></input>
-                          <br></br>
-                          <br></br>
-                        </>
-                      ) : (
-                        <h3 className="text-xl my-5 font-bold tracking-tight text-gray-600">
-                          Constituency :{" "}
-                          {currentVoter.Constituency
-                            ? currentVoter.Constituency
-                            : "Constituency"}
-                        </h3>
-                      )}
+                      <h3 className="text-xl my-5 font-bold tracking-tight text-gray-600">
+                        Constituency :{" "}
+                        {currentVoter.Constituency
+                          ? currentVoter.Constituency
+                          : "Constituency"}
+                      </h3>
                       {/* --------- Email ----------------------------- */}
                       {editStatus === true ? (
                         <>

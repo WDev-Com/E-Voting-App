@@ -116,18 +116,18 @@ export const getAllVoters = (pagination, filter) => {
   // Extract pagination parameters
   const page = pagination._page || 1;
   const pageSize = pagination._limit || 10;
-  let queryString = `?page=${page}&pageSize=${pageSize}`;
+  let queryString = `?_page=${page}&_limit=${pageSize}`;
   // console.log(queryString);
   // Filter by Constituency
-  if (filter.constituency) {
-    queryString += `&constituency=${filter.constituency}`;
+  if (filter.Constituency) {
+    queryString += `&constituency=${filter.Constituency}`;
   }
 
   // Filter by Role
-  if (filter.role) {
-    queryString += `&role=${filter.role}`;
+  if (filter.Role) {
+    queryString += `&role=${filter.Role}`;
   }
-
+  // console.log(queryString);
   // console.log(queryString);
   return new Promise(async (resolve) => {
     try {
@@ -148,14 +148,14 @@ export const getAllVoters = (pagination, filter) => {
   });
 };
 
-export function updateVoterRole({ id, roleD }) {
+export function updateVoterIdentity(datas) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/EleCommisson/UpdateVoterRole/` + id,
+        `http://localhost:8081/EleCommisson/UpdateVoterIdentity/` + datas.id,
         {
           method: "PATCH",
-          body: JSON.stringify({ role: roleD }),
+          body: JSON.stringify(datas),
           headers: { "content-type": "application/json" },
         }
       );
@@ -164,7 +164,8 @@ export function updateVoterRole({ id, roleD }) {
       if (response.ok) {
         toast.success("Update Successfull");
       }
-      resolve(data);
+      console.log({ data });
+      resolve({ data });
     } catch (error) {
       console.log(error);
       toast.error("Update Fail ");
@@ -277,7 +278,7 @@ export function deleteCandidate({ id }) {
   });
 }
 
-export function deleteVoter({ id }) {
+export function deleteVoter(id) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
