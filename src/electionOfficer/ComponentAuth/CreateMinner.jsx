@@ -42,6 +42,7 @@ const CreateMinnerPage = () => {
                     email: data.email,
                     password: data.password,
                     role: "",
+                    region: "",
                     MinnerID: "",
                     profileimages: "",
                   })

@@ -1,3 +1,4 @@
+import { combineSlices } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 export function updateElectionCommissioner(data) {
@@ -50,8 +51,8 @@ export const getAllCandidates = (pagination, filters) => {
   // Extract pagination parameters
 
   // console.log("===============>", pagination, filters);
-  const page = pagination.page || 1;
-  const pageSize = pagination.pageSize || 10;
+  const page = pagination._page || 1;
+  const pageSize = pagination._limit || 10;
 
   return new Promise(async (resolve) => {
     try {
@@ -59,7 +60,7 @@ export const getAllCandidates = (pagination, filters) => {
       let queryString = `page=${page}&pageSize=${pageSize}`;
 
       for (let key in filters) {
-        if (key === "role" || key === "constituency" || key === "party") {
+        if (key === "Role" || key === "Constituency" || key === "Party") {
           queryString += `&${key}=${filters[key]}`;
         }
       }
@@ -84,25 +85,27 @@ export const getAllCandidates = (pagination, filters) => {
 
 export const getAllMinners = (pagination, filters) => {
   // Extract pagination parameters
-  const page = pagination.page || 1;
-  const pageSize = pagination.pageSize || 10;
+  // console.log("Filter", filters);
+  const page = pagination._page || 1;
+  const pageSize = pagination._limit || 10;
 
   return new Promise(async (resolve) => {
     try {
       // Construct the query string
       let queryString = `?page=${page}&pageSize=${pageSize}`;
+
       for (let key in filters) {
-        if (key === "role") {
+        if (key === "Role" || key === "region") {
           queryString += `&${key}=${filters[key]}`;
         }
       }
-
+      // console.log(queryString);
       // Fetch minners with pagination and filters
       const response = await fetch(
         `http://localhost:8081/EleCommisson/getAllMinner${queryString}`
       );
       const data = await response.json();
-      const totalItems = response.headers.get("X-Total-Count");
+      const totalItems = response.headers.get("X-TotalMinner-Count");
 
       resolve({ data: { minners: data, totalItems: +totalItems } });
     } catch (error) {
@@ -173,14 +176,15 @@ export function updateVoterIdentity(datas) {
   });
 }
 
-export function updateCandidateRole({ id, roleD }) {
+export function updateCandidateIdentity(datas) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/EleCommisson/GiveRollToCandidate/` + id,
+        `http://localhost:8081/EleCommisson/UpdateCandidateIdentity/` +
+          datas.id,
         {
           method: "PATCH",
-          body: JSON.stringify({ role: roleD }),
+          body: JSON.stringify(datas),
           headers: { "content-type": "application/json" },
         }
       );
@@ -197,15 +201,15 @@ export function updateCandidateRole({ id, roleD }) {
   });
 }
 
-export function updateMinnerRole({ id, roleD }) {
-  console.log("Update Minner : " + id, roleD);
+export function updateMinnerIdentity(data) {
+  // console.log("Update Minner : " + data.id);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
-        `http://localhost:8081/EleCommisson/GiveRollToMinner/` + id,
+        `http://localhost:8081/EleCommisson/updateMinnerIdentity/` + data.id,
         {
           method: "PATCH",
-          body: JSON.stringify({ role: roleD }),
+          body: JSON.stringify(data),
           headers: { "content-type": "application/json" },
         }
       );
@@ -214,7 +218,8 @@ export function updateMinnerRole({ id, roleD }) {
       if (response.ok) {
         toast.success("Update Successfull");
       }
-      resolve(resdata);
+
+      resolve({ resdata });
     } catch (error) {
       console.log(error);
       toast.error("Update Fail ");
@@ -222,7 +227,7 @@ export function updateMinnerRole({ id, roleD }) {
   });
 }
 
-export function deleteMinner({ id }) {
+export function deleteMinner(id) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
@@ -252,7 +257,7 @@ export function deleteMinner({ id }) {
   });
 }
 
-export function deleteCandidate({ id }) {
+export function deleteCandidate(id) {
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(

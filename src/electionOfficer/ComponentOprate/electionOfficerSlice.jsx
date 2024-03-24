@@ -6,8 +6,8 @@ import {
   getAllMinners,
   getAllVoters,
   updateVoterIdentity,
-  updateCandidateRole,
-  updateMinnerRole,
+  updateCandidateIdentity,
+  updateMinnerIdentity,
   deleteMinner,
   deleteCandidate,
   deleteVoter,
@@ -24,6 +24,8 @@ const initialState = {
   totalcandidates: 0,
   error: null,
   voterpage: 1,
+  candidatespage: 1,
+  minnerpage: 1,
 };
 
 export const getEleCommissionAsync = createAsyncThunk(
@@ -39,6 +41,7 @@ export const getEleCommissionAsync = createAsyncThunk(
 export const getAllMinnersAsync = createAsyncThunk(
   "electionCommision/getAllMinner",
   async ({ pagination, filter }) => {
+    // console.log("getAllMinnersAsync==========>", pagination, filter);
     const response = await getAllMinners(pagination, filter);
 
     return response.data;
@@ -48,7 +51,7 @@ export const getAllMinnersAsync = createAsyncThunk(
 export const getAllCandidatessAsync = createAsyncThunk(
   "electionCommision/getAllCandidates",
   async ({ pagination, filter }) => {
-    // console.log("Slice==========>", pagination, filter);
+    // console.log("Slice==========>", filter);
     const response = await getAllCandidates(pagination, filter);
     // console.log("response========>", response);
     return response.data;
@@ -74,20 +77,20 @@ export const updateElectionCommissionerAsync = createAsyncThunk(
   }
 );
 
-export const updateMinnerRoleAsync = createAsyncThunk(
-  "electionCommision/updateMinnerRole",
+export const updateCandidateIdentityAsync = createAsyncThunk(
+  "electionCommision/updateCandidateIdentity",
   async (data) => {
     // console.log(data);
-    const response = await updateMinnerRole(data);
+    const response = await updateCandidateIdentity(data);
     return response.data;
   }
 );
 
-export const updateCandidateRoleAsync = createAsyncThunk(
-  "electionCommision/updateCandidateRole",
+export const updateMinnerIdentityAsync = createAsyncThunk(
+  "electionCommision/updateMinnerIdentity",
   async (data) => {
-    const response = await updateCandidateRole(data);
-    return response.data;
+    const response = await updateMinnerIdentity(data);
+    return response.resdata;
   }
 );
 
@@ -134,7 +137,12 @@ const electionCommisionSlice = createSlice({
   reducers: {
     handlePages: (state, action) => {
       state.voterpage = action.payload;
-      // console.log("Payload : ", action.payload);
+    },
+    handleCandiPages: (state, action) => {
+      state.candidatespage = action.payload;
+    },
+    handleMinerPages: (state, action) => {
+      state.minnerpage = action.payload;
     },
   },
   extraReducers(builder) {
@@ -154,7 +162,7 @@ const electionCommisionSlice = createSlice({
       .addCase(getAllMinnersAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.miners = action.payload.minners;
-        state.totalminers = action.payload.totalMinners;
+        state.totalminers = action.payload.totalItems;
       })
       //
       .addCase(getAllCandidatessAsync.pending, (state) => {
@@ -181,27 +189,28 @@ const electionCommisionSlice = createSlice({
       })
       .addCase(updateElectionCommissionerAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log("updateElectionCommissionerAsync", action.payload);
         const index = state.electioncommissner.findIndex(
           (officer) => officer.id === action.payload.id
         );
         state.electioncommissner[index] = action.payload;
       })
 
-      .addCase(updateMinnerRoleAsync.pending, (state) => {
+      .addCase(updateMinnerIdentityAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateMinnerRoleAsync.fulfilled, (state, action) => {
+      .addCase(updateMinnerIdentityAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.miners.findIndex(
-          (miner) => miner.id === miner.payload.id
+          (miner) => miner.id === action.payload.id
         );
         state.miners[index] = action.payload;
       })
 
-      .addCase(updateCandidateRoleAsync.pending, (state) => {
+      .addCase(updateCandidateIdentityAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateCandidateRoleAsync.fulfilled, (state, action) => {
+      .addCase(updateCandidateIdentityAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.candidates.findIndex(
           (candi) => candi.id === action.payload.id
@@ -214,7 +223,7 @@ const electionCommisionSlice = createSlice({
       })
       .addCase(updateVoterIdentityAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload);
+        // console.log(action.payload);
         const index = state.Voters.findIndex(
           (item) => item.id === action.payload.id
         );
@@ -260,6 +269,11 @@ export const selectElectionCommissner = (state) =>
   state.electionCommision.electioncommissner;
 export const selectVoterPage = (state) => state.electionCommision.voterpage;
 export const { handlePages } = electionCommisionSlice.actions;
+export const { handleCandiPages } = electionCommisionSlice.actions;
+export const selectCandiPage = (state) =>
+  state.electionCommision.candidatespage;
+export const { handleMinerPages } = electionCommisionSlice.actions;
+export const selectMinerPage = (state) => state.electionCommision.minnerpage;
 export const selectVoters = (state) => state.electionCommision.Voters;
 export const selectTotalVoters = (state) => state.electionCommision.totalvoters;
 export const selectMiners = (state) => state.electionCommision.miners;

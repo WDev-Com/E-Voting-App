@@ -4,23 +4,21 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 import {
-  getVoterByIdAsync,
-  selectVoterData,
-} from "../../voter/ComponentOprate/voterSlice";
-import {
-  selectLoggedInVoterToken,
-  signOutVoterAsync,
-} from "../../voter/ComponentAuth/voterAuthSlice";
+  getCandidateByIdAsync,
+  selectCandidateData,
+} from "../../candidate/ComponentOprate/CandidateSlice";
+import { selectLoggedInCandidateToken } from "../../candidate/ComponentAuth/CandidateAuthSlice";
 import { toast } from "react-toastify";
 import { BiImageAdd } from "react-icons/bi";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import NavBar from "../Navigations/ElectionComNav";
-import { updateVoterIdentityAsync } from "./electionOfficerSlice";
+import { updateCandidateIdentityAsync } from "./electionOfficerSlice";
+
 const Roles = [
   {
     id: 1,
-    role: "voter",
+    role: "candidate",
   },
   {
     id: 2,
@@ -31,15 +29,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function UpdateVoter() {
+function UpdateCandiate() {
   const dispatch = useDispatch();
   const params = useParams();
-  const currentVoter = useSelector(selectVoterData);
-  const currentVoterID = useSelector(selectLoggedInVoterToken);
-  // console.log(currentVoter);
+  const currentCandidate = useSelector(selectCandidateData);
+  const currentCandidateID = useSelector(selectLoggedInCandidateToken);
+  // console.log(currentCandidate);
   useEffect(() => {
-    dispatch(getVoterByIdAsync({ id: params.ID }));
-  }, [dispatch, params.ID]);
+    dispatch(getCandidateByIdAsync({ id: params.ID }));
+  }, [dispatch, params, params.ID]);
 
   const {
     register,
@@ -48,23 +46,31 @@ function UpdateVoter() {
     setValue,
     formState: { errors },
   } = useForm();
-  const [selected, setSelected] = useState(Roles[1]);
+  const [selected, setSelected] = useState(
+    currentCandidate.role === Roles[0]["role"] ? Roles[0] : Roles[1]
+  );
 
   const handleEditProfile = (profileUpdate) => {
-    const newUser = { ...currentVoter }; // for shallow copy issue
+    const newUser = { ...currentCandidate }; // for shallow copy issue
     delete newUser.name;
     delete newUser.email;
     delete newUser.profileimages;
     delete newUser.username;
+    delete newUser.VoteCount;
     delete newUser.addresses;
-
-    newUser.VoterID = profileUpdate.VoterID;
-    newUser.authority = profileUpdate.authority;
+    // console.log("selected.role", selected.role);
+    newUser.CandidateID = profileUpdate.VoterID;
+    newUser.Party = profileUpdate.Party;
     newUser.role = selected.role;
     newUser.Constituency = profileUpdate.Constituency;
     // console.log(newUser);
-    dispatch(updateVoterIdentityAsync({ ...newUser }));
+    dispatch(updateCandidateIdentityAsync({ ...newUser }));
   };
+
+  const [editStatus, setEditstatus] = useState(false);
+  function handleedit() {
+    setEditstatus(editStatus ? false : true);
+  }
 
   return (
     <NavBar>
@@ -119,54 +125,56 @@ function UpdateVoter() {
                     <div className="text-center">
                       <p className="text-2xl font-extrabold">
                         {" "}
-                        VOTER IDENTITY{" "}
+                        CANDIDATE IDENTITY{" "}
                       </p>
                     </div>
                     <div className="text-left">
                       {/* -------------- Name ------------------ */}
                       <h3 className="text-xl font-semibold leading-normal text-gray-700 mb-2">
                         Name :{" "}
-                        {currentVoter.name ? currentVoter.name : "New User"}
+                        {currentCandidate.name
+                          ? currentCandidate.name
+                          : "New User"}
                       </h3>
                       {/* -------------- Username ------------------ */}
                       <h3 className="text-xl font-semibold leading-normal text-gray-700 mb-2">
                         Username :{" "}
-                        {currentVoter.username
-                          ? currentVoter.username
+                        {currentCandidate.username
+                          ? currentCandidate.username
                           : "New User"}
                       </h3>
                     </div>
                     <div className="text-center">
-                      {/* --------- Voter ID ----------------------------- */}
-                      <label className="block mb-2">Voter ID :</label>
+                      {/* --------- Candidate ID ----------------------------- */}
+                      <label className="block mb-2">Candidate ID :</label>
                       <input
                         type="text"
                         name="VoterID"
                         id="VoterID"
-                        {...register("VoterID", {
+                        {...register("CandidateID", {
                           required: "Voter ID is required",
                         })}
                         className="block w-full px-4 py-2 leading-normal text-gray-700 rounded-md mb-4"
                         placeholder={
-                          currentVoter.VoterID
-                            ? currentVoter.VoterID
+                          currentCandidate.CandidateID
+                            ? currentCandidate.CandidateID
                             : "Voter ID Not Assign"
                         }
                       />
-                      {/*------- Authority----------- */}
-                      <label className="block mb-2">Authority :</label>
+                      {/*------- Party----------- */}
+                      <label className="block mb-2">Party :</label>
                       <input
                         type="text"
-                        name="authority"
-                        id="authority"
-                        {...register("authority", {
-                          required: "authority ID is required",
+                        name="Party"
+                        id="Party"
+                        {...register("Party", {
+                          required: "Party ID is required",
                         })}
                         className="block w-full px-4 py-2 leading-normal text-gray-700 rounded-md mb-4"
                         placeholder={
-                          currentVoter.authority
-                            ? currentVoter.authority
-                            : "Authority Not Assign"
+                          currentCandidate.Party
+                            ? currentCandidate.Party
+                            : "Party Not Assign"
                         }
                       />
                       {/*------- Role----------- */}
@@ -189,8 +197,8 @@ function UpdateVoter() {
                         })}
                         className="block w-full px-4 py-2 leading-normal text-gray-700 rounded-md mb-4"
                         placeholder={
-                          currentVoter.Constituency
-                            ? currentVoter.Constituency
+                          currentCandidate.Constituency
+                            ? currentCandidate.Constituency
                             : "Your Constituency"
                         }
                       />
@@ -202,7 +210,7 @@ function UpdateVoter() {
                       >
                         SUBMIT
                       </button>
-                      <Link to="/ViewVoter">
+                      <Link to="/ViewCandidate">
                         <button
                           className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                           type="button"
@@ -295,4 +303,4 @@ function DropDown({ Roles, selected, setSelected }) {
   );
 }
 
-export default UpdateVoter;
+export default UpdateCandiate;

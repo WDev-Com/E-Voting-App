@@ -23,13 +23,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { ITEMS_PER_PAGE } from "../../../Store/constants";
 import Pagination from "../../CommonComponent/Pagination/Pagination";
-const sortOptions = [
-  { name: "Most Popular", href: "#", current: true },
-  { name: "Best Rating", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-];
+
 const filters = [
   {
     id: "Constituency",
@@ -57,10 +51,6 @@ function classNames(...classes) {
 
 const VoterPage = () => {
   const dispatch = useDispatch();
-  const DataRole = {
-    id: "65b0b46443af5537c7499196",
-    roleD: "voter",
-  };
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const voters = useSelector(selectVoters);
   // console.log("Voter", voters[0]);
@@ -169,7 +159,7 @@ const VoterPage = () => {
   );
 };
 
-const ViewList = ({ voters, voterTotalCount, dispatch }) => {
+function ViewList({ voters, voterTotalCount, dispatch }) {
   return (
     <div className="container mx-auto p-4">
       <div>
@@ -177,17 +167,27 @@ const ViewList = ({ voters, voterTotalCount, dispatch }) => {
           voters.map((voter) => (
             <div
               key={voter.id}
-              className="mb-8 p-4 border border-gray-300 rounded"
+              className="flex items-center mb-8 p-4 border border-gray-300 rounded-lg shadow-lg"
             >
-              <p>Name: {voter.name}</p>
-              <p>Voter ID: {voter.VoterID}</p>
-              <p>Username: {voter.username}</p>
-              <p>Email: {voter.email}</p>
-              <p>Role: {voter.role}</p>
-              <p>Authority: {voter.authority}</p>
-              <p>Constituency: {voter.Constituency}</p>
-              <div className="flex justify-end mt-4">
-                {/* TODO : validateDOMNesting(...): <a> cannot appear as a descendant of <a>. */}
+              <div className="flex items-center flex-col mr-4">
+                <img
+                  src={voter.profileimages} // Assuming voter object has a profileImage property
+                  alt={voter.name}
+                  className="w-16 h-16 rounded-full object-cover mb-1"
+                />
+                <p className="font-semibold">{voter.name}</p>
+              </div>
+
+              <div className="flex-grow mr-4">
+                <p>Voter ID: {voter.VoterID}</p>
+                <p>Username: {voter.username}</p>
+                <p>Email: {voter.email}</p>
+                <p>Role: {voter.role}</p>
+                <p>Authority: {voter.authority}</p>
+                <p>Constituency: {voter.Constituency}</p>
+              </div>
+
+              <div className="flex items-center">
                 <Link to={`/UpdateVoter/${voter.id}`}>
                   <button className="mr-2">
                     <FaEdit />
@@ -195,7 +195,6 @@ const ViewList = ({ voters, voterTotalCount, dispatch }) => {
                 </Link>
                 <button
                   onClick={() => {
-                    // console.log("voter.id:", voter.id);
                     dispatch(deleteVoterAsync(voter.id));
                   }}
                 >
@@ -210,7 +209,7 @@ const ViewList = ({ voters, voterTotalCount, dispatch }) => {
       </div>
     </div>
   );
-};
+}
 
 function MobileFilter({
   mobileFiltersOpen,
@@ -334,7 +333,6 @@ function MobileFilter({
           </div>
         </Dialog>
       </Transition.Root>
-      ;
     </div>
   );
 }

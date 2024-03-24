@@ -41,6 +41,7 @@ const CandidateSignUpForm = () => {
                   CandidateID: "",
                   Constituency: "",
                   Party: "",
+                  PartySymbol: "",
                   VoteCount: "",
                   addresses: "",
                   profileimages: "",

@@ -24,6 +24,11 @@ const CandidateProfile = () => {
   const fileInputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [imgselected, setImgselected] = useState(false);
+
+  const [partySymbolFile, setPartySymbolFile] = useState(null); // State for PartySymbol image
+  const partySymbolFileInputRef = useRef(null);
+  const [partySymbolPreviewUrl, setPartySymbolPreviewUrl] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -44,6 +49,18 @@ const CandidateProfile = () => {
     fileReader.readAsDataURL(file);
     // console.log(previewUrl);
   }, [file]);
+
+  useEffect(() => {
+    if (!partySymbolFile) {
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPartySymbolPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(partySymbolFile);
+  }, [partySymbolFile]);
+
   // console.log(previewUrl);
   let imageSizeInKB;
   if (previewUrl !== null) {
@@ -66,6 +83,7 @@ const CandidateProfile = () => {
     newUser.Constituency = profileUpdate.Constituency;
     newUser.addresses = profileUpdate.addresses;
     newUser.profileimages = previewUrl;
+    newUser.PartySymbol = partySymbolPreviewUrl;
     // console.log(newUser);
     dispatch(updateCandidateAsync({ ...newUser }));
   };
@@ -164,6 +182,7 @@ const CandidateProfile = () => {
                         )}
                       </div>
                     </div>
+                    {/* Profile Image */}
                     <div className="flex flex-wrap justify-center">
                       <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                         <div className="relative">
@@ -293,6 +312,49 @@ const CandidateProfile = () => {
                             : "Haven't Assigned....."}
                         </h3>
                       }
+                      {/*------- Party Symbol----------- */}{" "}
+                      {/* Party Symbol Image */}
+                      <div className="flex flex-wrap justify-center">
+                        <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
+                          <div className="relative">
+                            {editStatus === false ? (
+                              <img
+                                alt="..."
+                                src={currentCandidate.PartySymbol}
+                                //-m-16 -ml-20 lg:-ml-16
+                                className="relative shadow-xl h-40 w-40 sm:h-30 sm:w-30 rounded-full align-middle border-none"
+                              />
+                            ) : null}
+                            {editStatus && partySymbolPreviewUrl && (
+                              <img
+                                alt="Party Symbol"
+                                src={partySymbolPreviewUrl}
+                                className="relative shadow-xl h-40 w-40 sm:h-30 sm:w-30 rounded-full align-middle border-none"
+                              />
+                            )}
+                            {editStatus && !partySymbolPreviewUrl && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  partySymbolFileInputRef.current.click();
+                                  setImgselected(true);
+                                }}
+                              >
+                                <BiImageAdd className="relative shadow-xl h-32 w-32 sm:h-30 sm:w-30 rounded-full align-middle border-none" />
+                              </button>
+                            )}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              hidden
+                              ref={partySymbolFileInputRef}
+                              onChange={(e) =>
+                                setPartySymbolFile(e.target.files[0])
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
                       {/*------- Role----------- */}{" "}
                       {currentCandidate.role === "candidate" && (
                         <h3 className="text-xl my-5 font-bold tracking-tight text-red-900">

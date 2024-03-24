@@ -37,6 +37,8 @@ import { selectVoterChecked } from "./voter/ComponentAuth/voterAuthSlice";
 import VoterEVMPage from "./voter/ComponentOprate/EVM";
 import MinerCountVote from "./minner/ComponentOprate/MinerCountVote";
 import UpdateVoter from "./electionOfficer/ComponentOprate/UpdateVoter";
+import UpdateCandiate from "./electionOfficer/ComponentOprate/UpdateCandi";
+import UpdateMinner from "./electionOfficer/ComponentOprate/UpdateMinner";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -48,6 +50,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedEleCom>
         <ViewCandidate></ViewCandidate>
+      </ProtectedEleCom>
+    ),
+  },
+  {
+    path: "/UpdateCandidate/:ID",
+    element: (
+      <ProtectedEleCom>
+        <UpdateCandiate></UpdateCandiate>
       </ProtectedEleCom>
     ),
   },
@@ -72,6 +82,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedEleCom>
         <ViewMinner></ViewMinner>
+      </ProtectedEleCom>
+    ),
+  },
+  {
+    path: "/UpdateMinner/:ID",
+    element: (
+      <ProtectedEleCom>
+        <UpdateMinner></UpdateMinner>
       </ProtectedEleCom>
     ),
   },

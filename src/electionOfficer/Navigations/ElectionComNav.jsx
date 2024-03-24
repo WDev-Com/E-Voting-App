@@ -44,7 +44,7 @@ export default function NavBar({ children }) {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="h-12 w-auto rounded-full"
-                      src="evote.png"
+                      src="/evote.png"
                       alt="E-Vote System Logo"
                     />
                   </div>

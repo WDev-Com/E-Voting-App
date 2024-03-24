@@ -4,23 +4,21 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 import {
-  getVoterByIdAsync,
-  selectVoterData,
-} from "../../voter/ComponentOprate/voterSlice";
-import {
-  selectLoggedInVoterToken,
-  signOutVoterAsync,
-} from "../../voter/ComponentAuth/voterAuthSlice";
+  getMinnerByIdsync,
+  selectMinnerData,
+} from "../../minner/ComponentOprate/minnerSlice";
+import { selectLoggedInMinnerToken } from "../../minner/ComponentAuth/minnerAuthSlice";
 import { toast } from "react-toastify";
 import { BiImageAdd } from "react-icons/bi";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import NavBar from "../Navigations/ElectionComNav";
-import { updateVoterIdentityAsync } from "./electionOfficerSlice";
+import { updateMinnerIdentityAsync } from "./electionOfficerSlice";
+
 const Roles = [
   {
     id: 1,
-    role: "voter",
+    role: "minner",
   },
   {
     id: 2,
@@ -31,15 +29,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function UpdateVoter() {
+function UpdateMinner() {
   const dispatch = useDispatch();
   const params = useParams();
-  const currentVoter = useSelector(selectVoterData);
-  const currentVoterID = useSelector(selectLoggedInVoterToken);
-  // console.log(currentVoter);
+  const currentMinner = useSelector(selectMinnerData);
+  const currentMinnerID = useSelector(selectLoggedInMinnerToken);
+  // console.log(currentMinner);
   useEffect(() => {
-    dispatch(getVoterByIdAsync({ id: params.ID }));
-  }, [dispatch, params.ID]);
+    dispatch(getMinnerByIdsync({ id: params.ID }));
+  }, [dispatch, params, params.ID]);
 
   const {
     register,
@@ -48,24 +46,23 @@ function UpdateVoter() {
     setValue,
     formState: { errors },
   } = useForm();
-  const [selected, setSelected] = useState(Roles[1]);
+  const [selected, setSelected] = useState(
+    currentMinner.role === Roles[0]["role"] ? Roles[0] : Roles[1]
+  );
 
   const handleEditProfile = (profileUpdate) => {
-    const newUser = { ...currentVoter }; // for shallow copy issue
+    const newUser = { ...currentMinner }; // for shallow copy issue
     delete newUser.name;
+    delete newUser.username;
     delete newUser.email;
     delete newUser.profileimages;
-    delete newUser.username;
-    delete newUser.addresses;
-
-    newUser.VoterID = profileUpdate.VoterID;
-    newUser.authority = profileUpdate.authority;
+    // console.log("selected.role", selected.role);
+    newUser.MinnerID = profileUpdate.MinnerID;
     newUser.role = selected.role;
-    newUser.Constituency = profileUpdate.Constituency;
+    newUser.region = profileUpdate.region;
     // console.log(newUser);
-    dispatch(updateVoterIdentityAsync({ ...newUser }));
+    dispatch(updateMinnerIdentityAsync({ ...newUser }));
   };
-
   return (
     <NavBar>
       <div>
@@ -119,54 +116,38 @@ function UpdateVoter() {
                     <div className="text-center">
                       <p className="text-2xl font-extrabold">
                         {" "}
-                        VOTER IDENTITY{" "}
+                        CANDIDATE IDENTITY{" "}
                       </p>
                     </div>
                     <div className="text-left">
                       {/* -------------- Name ------------------ */}
                       <h3 className="text-xl font-semibold leading-normal text-gray-700 mb-2">
                         Name :{" "}
-                        {currentVoter.name ? currentVoter.name : "New User"}
+                        {currentMinner.name ? currentMinner.name : "New User"}
                       </h3>
                       {/* -------------- Username ------------------ */}
                       <h3 className="text-xl font-semibold leading-normal text-gray-700 mb-2">
                         Username :{" "}
-                        {currentVoter.username
-                          ? currentVoter.username
+                        {currentMinner.username
+                          ? currentMinner.username
                           : "New User"}
                       </h3>
                     </div>
                     <div className="text-center">
-                      {/* --------- Voter ID ----------------------------- */}
+                      {/* --------- Minner ID ----------------------------- */}
                       <label className="block mb-2">Voter ID :</label>
                       <input
                         type="text"
-                        name="VoterID"
-                        id="VoterID"
-                        {...register("VoterID", {
-                          required: "Voter ID is required",
+                        name="MinnerID"
+                        id="MinnerID"
+                        {...register("MinnerID", {
+                          required: "Minner ID is required",
                         })}
                         className="block w-full px-4 py-2 leading-normal text-gray-700 rounded-md mb-4"
                         placeholder={
-                          currentVoter.VoterID
-                            ? currentVoter.VoterID
-                            : "Voter ID Not Assign"
-                        }
-                      />
-                      {/*------- Authority----------- */}
-                      <label className="block mb-2">Authority :</label>
-                      <input
-                        type="text"
-                        name="authority"
-                        id="authority"
-                        {...register("authority", {
-                          required: "authority ID is required",
-                        })}
-                        className="block w-full px-4 py-2 leading-normal text-gray-700 rounded-md mb-4"
-                        placeholder={
-                          currentVoter.authority
-                            ? currentVoter.authority
-                            : "Authority Not Assign"
+                          currentMinner.MinnerID
+                            ? currentMinner.MinnerID
+                            : "Minner ID Not Assign"
                         }
                       />
                       {/*------- Role----------- */}
@@ -178,20 +159,20 @@ function UpdateVoter() {
                           setSelected={setSelected}
                         />
                       </div>
-                      {/*------- Constituency ----------- */}
+                      {/*------- Region ----------- */}
                       <label className="block mb-2">Constituency :</label>
                       <input
                         type="text"
-                        name="Constituency"
-                        id="Constituency"
-                        {...register("Constituency", {
-                          required: "Constituency is required",
+                        name="region"
+                        id="region"
+                        {...register("region", {
+                          required: "region is required",
                         })}
                         className="block w-full px-4 py-2 leading-normal text-gray-700 rounded-md mb-4"
                         placeholder={
-                          currentVoter.Constituency
-                            ? currentVoter.Constituency
-                            : "Your Constituency"
+                          currentMinner.region
+                            ? currentMinner.region
+                            : "Your Region"
                         }
                       />
                     </div>
@@ -202,7 +183,7 @@ function UpdateVoter() {
                       >
                         SUBMIT
                       </button>
-                      <Link to="/ViewVoter">
+                      <Link to="/ViewMinner">
                         <button
                           className="bg-blue-400 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                           type="button"
@@ -295,4 +276,4 @@ function DropDown({ Roles, selected, setSelected }) {
   );
 }
 
-export default UpdateVoter;
+export default UpdateMinner;

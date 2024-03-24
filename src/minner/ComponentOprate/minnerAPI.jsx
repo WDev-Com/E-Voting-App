@@ -38,7 +38,8 @@ export function updateMinner(data) {
       if (response.ok) {
         toast.success("Update Successful");
       }
-      resolve(updatedData);
+      console.log("updatedData", { updatedData });
+      resolve({ updatedData });
     } catch (error) {
       console.error(error);
       toast.error("Update Fail");

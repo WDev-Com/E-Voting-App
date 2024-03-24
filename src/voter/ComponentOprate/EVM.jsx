@@ -1,89 +1,99 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import NavBarVoter from "../Navigations/VoterNavigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllCandidateOFConstituencyAsync,
-  getVoterByIdAsync,
   selectCandidateOFConstituency,
-  selectVoterData,
 } from "./voterSlice";
-import {
-  selectLoggedInVoterToken,
-  signOutVoterAsync,
-} from "../ComponentAuth/voterAuthSlice";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import "./CSS/EVM.css";
-import NavBarVoter from "../Navigations/VoterNavigation";
-const VoterEVMPage = () => {
-  const dispatch = useDispatch();
-  const currentLoggedVoter = useSelector(selectLoggedInVoterToken);
-  const currentVoter = useSelector(selectVoterData);
-  const CandidateOFConstituency = useSelector(selectCandidateOFConstituency);
-  // console.log("currentCandidate", currentVoter);
-  // console.log("currentLoggedVoter", currentLoggedVoter);
+
+function Evm() {
+  let dispatch = useDispatch();
+  let allCandidate = useSelector(selectCandidateOFConstituency);
   useEffect(() => {
-    dispatch(
-      getAllCandidateOFConstituencyAsync({ consti: currentVoter.Constituency })
-    );
-    dispatch(getVoterByIdAsync({ id: currentLoggedVoter }));
+    dispatch(getAllCandidateOFConstituencyAsync({ consti: "Pali" }));
   }, []);
-  const [selectedCandidate, setSelectedCandidate] = useState("");
-  const handleCandidateChange = (event) => {
-    // console.log(event.target.value);
-    setSelectedCandidate(event.target.value);
-  };
-  const vote = {
-    voterID: currentVoter.VoterID,
-    candidateID: selectedCandidate,
-    authority: currentVoter.authority,
-  };
-  const handleVoteSubmit = () => {
-    // Implement your vote submission logic here
-    //http://localhost:8081/Vote/CreatingVote
-    // console.log("Vote Format:", vote);
-    // You can dispatch an action to submit the vote to the server if needed
+  const handleVote = (candidate) => {
+    console.log("Voted for:", candidate.name);
+    // You can implement the logic to submit the vote here
   };
 
   return (
-    <>
-      <NavBarVoter>
-        Hello Voter
-        {currentVoter ? (
-          <div>
-            <h2>Candidate OF Constituency Page</h2>
-            {currentVoter ? (
-              <div>
-                {CandidateOFConstituency.map((candidate) => (
-                  <div key={candidate.id} className="candidate-card">
-                    <input
-                      type="radio"
-                      id={`candidate-${candidate.CandidateID}`}
-                      name="selectedCandidate"
-                      value={candidate.CandidateID}
-                      checked={selectedCandidate === candidate.CandidateID}
-                      onChange={handleCandidateChange}
-                    />
-                    <label htmlFor={`candidate-${candidate.CandidateID}`}>
-                      <h3>Name : {candidate.name}</h3>
-                      <p>Party : {candidate.Party}</p>
-                      {/* Add more details as needed */}
-                    </label>
-                  </div>
-                ))}
-                <button type="button" onClick={handleVoteSubmit}>
-                  Submit Vote
-                </button>
-              </div>
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
-        ) : (
-          "Re-Check"
-        )}
-      </NavBarVoter>
-    </>
-  );
-};
+    <NavBarVoter>
+      <div className="p-4">
+        {" "}
+        <div className="container mx-auto border border-gray-200 max-w-screen-md bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="flex rounded-t-xl  bg-indigo-600 justify-between items-center p-6 border-b border-gray-300">
+            {/* Logo and name container */}
 
-export default VoterEVMPage;
+            <div className="flex items-center gap-3">
+              <img
+                className="w-14 h-14 rounded-full"
+                src="https://www.eci.gov.in/newimg/eci-logo-white.svg"
+                alt="Election Commission of India Logo"
+              />
+              <h2 className="text-lg md:text-xl font-medium text-gray-50">
+                Election Commission of INDIA
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <span className="text-gray-300">Status</span>
+              <span className="bg-green-500 rounded-full px-2 py-1">
+                Active
+              </span>
+            </div>
+          </div>
+
+          {/* Party Names and Vote button */}
+          <div className="bg-white flex flex-col h-full">
+            {allCandidate &&
+              allCandidate.map((candidate, index) => (
+                <div
+                  key={index}
+                  className="p-6 flex  items-center justify-between gap-3 border-b border-gray-300 shadow-none h-full"
+                >
+                  <h2 className="text-lg md:text-xl">{index + 1}</h2>
+                  <img
+                    src={candidate.profileimages}
+                    alt="party logo"
+                    className="w-12 h-12 rounded-full md:w-16 md:h-16"
+                  />
+                  <div className="flex gap-2 flex-col items-center">
+                    <h3 className="text-lg md:text-xl">{candidate.name}</h3>
+                    <h3 className="text-xl font-bold text-gray-400">
+                      ({candidate.Party})
+                    </h3>
+                  </div>
+                  <img
+                    src={candidate.PartySymbol}
+                    alt="party logo"
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-full"
+                  />
+                  <div className="flex items-center gap-2 md:gap-5 bg-white p-3 border-none">
+                    <FontAwesomeIcon
+                      icon={faArrowLeftLong}
+                      className="w-6 h-6 md:w-8 md:h-8 font-bold"
+                    />
+                    <button
+                      onClick={() => handleVote(candidate)}
+                      className="bg-indigo-500 hover:bg-indigo-700 text-white px-4 md:px-6 rounded-full py-2"
+                    >
+                      Vote
+                    </button>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <div className="bg-indigo-600 text-gray-300 text-lg">
+            <p className="text-lg p-2">Electronic Voting Machine</p>
+          </div>
+        </div>
+      </div>
+    </NavBarVoter>
+  );
+}
+
+export default Evm;
