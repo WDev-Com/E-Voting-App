@@ -49,22 +49,6 @@ const minnerSlice = createSlice({
       })
       .addCase(updateMinnerAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log("state.minner >>>> ", state.minner);
-        console.log(
-          "action.payload===== updateMinnerAsync ====",
-          action.payload
-        );
-        const updatedMinner = action.payload; // Assuming action.payload is the updated minner object
-        const index = state.minner.findIndex(
-          (miner) => miner.id === updatedMinner.id
-        );
-        if (index !== -1) {
-          // If the miner with the same ID exists, update it
-          state.minner[index] = updatedMinner;
-        } else {
-          // If the miner with the same ID doesn't exist, add it
-          state.minner.push(updatedMinner);
-        }
       });
   },
 });

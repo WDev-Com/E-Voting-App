@@ -16,7 +16,7 @@ const MinerProfile = () => {
   const dispatch = useDispatch();
   const currentMinner = useSelector(selectMinnerData);
   const loginUserToken = useSelector(selectLoggedInMinnerToken);
-  console.log("currentMinner.MinnerID : ", currentMinner.MinnerID);
+  // console.log("currentMinner.MinnerID : ", currentMinner.MinnerID);
   useEffect(() => {
     dispatch(getMinnerByIdsync({ id: loginUserToken }));
   }, []);
@@ -52,7 +52,7 @@ const MinerProfile = () => {
     imageSizeInKB = imageSizeInBytes / 1024;
     const imageSizeInMB = imageSizeInKB / 1024;
   }
-  console.log("imageSizeInKB : ", imageSizeInKB);
+  // console.log("imageSizeInKB : ", imageSizeInKB);
   if (imageSizeInKB > 80) {
     setPreviewUrl(null);
     toast.error("Please Select Image Below the Size of 80 Kb");
@@ -64,7 +64,7 @@ const MinerProfile = () => {
     newUser.username = profileUpdate.username;
     newUser.email = profileUpdate.email;
     newUser.profileimages = previewUrl;
-    console.log(newUser);
+    // console.log(newUser);
     dispatch(updateMinnerAsync({ ...newUser }));
   };
 

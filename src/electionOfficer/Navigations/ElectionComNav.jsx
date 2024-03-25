@@ -11,7 +11,18 @@ const navigation = [
   { name: "Voters", to: "/ViewVoter", current: false },
   { name: "Candidates", to: "/ViewCandidate", current: false },
   { name: "Minners", to: "/ViewMinner", current: false },
+  {
+    name: "Officer",
+    to: "/ViewAllOfficer",
+    current: false,
+  },
+
   { name: "Create Minner", to: "/CreateMinner", current: false },
+  {
+    name: "Create VCN",
+    to: "/VoterConfirmationNo",
+    current: false,
+  },
 ];
 
 function classNames(...classes) {

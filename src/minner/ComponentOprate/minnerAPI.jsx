@@ -22,7 +22,7 @@ export function getMinnerById({ id }) {
 }
 
 export function updateMinner(data) {
-  console.log("updateVoter", data);
+  // console.log("updateVoter", data);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(
@@ -34,11 +34,11 @@ export function updateMinner(data) {
         }
       );
       const updatedData = await response.json();
-      console.log("Response from server:", updatedData); // Add this line to log the response
+      // console.log("Response from server:", updatedData); // Add this line to log the response
       if (response.ok) {
         toast.success("Update Successful");
       }
-      console.log("updatedData", { updatedData });
+      // console.log("updatedData", { updatedData });
       resolve({ updatedData });
     } catch (error) {
       console.error(error);

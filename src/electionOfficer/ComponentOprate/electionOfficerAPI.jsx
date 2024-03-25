@@ -1,5 +1,52 @@
 import { combineSlices } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+export function genrateVoterConfirmationNoREQ(datas) {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/EleCommisson/GenrateVoterConfirmationNo/` +
+          datas.id,
+        {
+          method: "POST",
+        }
+      );
+      const data = await response.json();
+      // console.log("Response from server:", data); // Add this line to log the response
+      if (response.ok) {
+        toast.success("Genrated Successfully");
+      }
+      console.log({ data });
+      resolve({ data });
+    } catch (error) {
+      console.log(error);
+      toast.error("Generation Fail ");
+    }
+  });
+}
+
+export function getVoterConfirmationNoREQ(datas) {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/EleCommisson/GetVoterConfirmationNo/` + datas.id,
+        {
+          method: "POST",
+        }
+      );
+      const data = await response.json();
+      // console.log("Response from server:", data); // Add this line to log the response
+      if (response.ok) {
+        alert("Voter Confirmation No : " + data.VoterConfirmNo);
+        // toast.success("NO : " + data.VoterConfirmNo);
+      }
+
+      resolve({ data });
+    } catch (error) {
+      console.log(error);
+      toast.error("Fetching Fail ");
+    }
+  });
+}
 
 export function updateElectionCommissioner(data) {
   // console.log("updateElectionCommissioner", data);
@@ -19,7 +66,7 @@ export function updateElectionCommissioner(data) {
       if (response.ok) {
         toast.success("Update Successful");
       }
-      resolve(data);
+      resolve({ data });
     } catch (error) {
       console.error(error);
       toast.error("Update Fail ");
@@ -46,7 +93,50 @@ export function getEleCommission({ id }) {
     resolve({ data: { ElectionComission: dataA } });
   });
 }
-//
+
+export function getAllEleCommission(pagination, filters) {
+  // Extract pagination parameters
+  const page = pagination._page || 1;
+  const pageSize = pagination._limit || 10;
+
+  return new Promise(async (resolve) => {
+    try {
+      // Construct the query string
+      let queryString = `?_page=${page}&_limit=${pageSize}`;
+
+      for (let key in filters) {
+        if (key === "role") {
+          queryString += `&${key}=${filters[key]}`;
+        }
+      }
+      // console.log("queryString := ", queryString);
+      // Fetch election commissions with pagination and filters
+      const response = await fetch(
+        `http://localhost:8081/EleCommisson/GetAllelectionCommissions${queryString}`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      const totalElectionCommissions = response.headers.get(
+        "X-Total-Election-Commissions-Count"
+      );
+      resolve({
+        data: {
+          ElectionCommission: data,
+          totalElectionCommissions: +totalElectionCommissions,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching ElectionCommissions:", error);
+      resolve({
+        data: { ElectionCommission: [], totalElectionCommissions: 0 },
+      });
+    }
+  });
+}
+
 export const getAllCandidates = (pagination, filters) => {
   // Extract pagination parameters
 

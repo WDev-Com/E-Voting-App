@@ -11,21 +11,28 @@ import {
   deleteMinner,
   deleteCandidate,
   deleteVoter,
+  genrateVoterConfirmationNoREQ,
+  getVoterConfirmationNoREQ,
+  getAllEleCommission,
 } from "./electionOfficerAPI";
 const initialState = {
   value: 0,
   status: "idle",
   electioncommissner: [],
+  Allelectioncommissner: [],
+  totalElectionCommissions: 0,
   Voters: [],
   totalvoters: 0,
   miners: [],
   totalminers: 0,
   candidates: [],
+
   totalcandidates: 0,
   error: null,
   voterpage: 1,
   candidatespage: 1,
   minnerpage: 1,
+  electioncommissnerpage: 1,
 };
 
 export const getEleCommissionAsync = createAsyncThunk(
@@ -34,6 +41,7 @@ export const getEleCommissionAsync = createAsyncThunk(
     const response = await getEleCommission(obj);
 
     // console.log(filter);
+    // console.log(response.data);
     return response.data;
   }
 );
@@ -68,14 +76,25 @@ export const getAllVotersAsync = createAsyncThunk(
   }
 );
 
+export const getAllEleCommissionAsync = createAsyncThunk(
+  "electionCommision/getAllEleCommission",
+  async ({ pagination, filter }) => {
+    // console.log("Slice==========>", pagination, filter);
+    const response = await getAllEleCommission(pagination, filter);
+    // console.log("pagination, filter", pagination, filter);
+    return response.data;
+  }
+);
+/////////////////////////%%%%%WORK%%%%%%%%%%%%%%%%
 export const updateElectionCommissionerAsync = createAsyncThunk(
   "electionCommision/updateElectionCommissioner",
   async (data) => {
     // console.log(data);
     const response = await updateElectionCommissioner(data);
-    return response.data;
+    return response.resdata;
   }
 );
+/////////////////////////%%%%%%%%%%%%%%%%%%%%%
 
 export const updateCandidateIdentityAsync = createAsyncThunk(
   "electionCommision/updateCandidateIdentity",
@@ -130,6 +149,24 @@ export const deleteVoterAsync = createAsyncThunk(
   }
 );
 
+export const genrateVoterConfirmationNoREQAsync = createAsyncThunk(
+  "electionCommision/genrateVoterConfirmationNoREQ",
+  async (data) => {
+    // console.log("ID ", data);
+    const response = await genrateVoterConfirmationNoREQ(data);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+export const getVoterConfirmationNoREQREQAsync = createAsyncThunk(
+  "electionCommision/getVoterConfirmationNoREQ",
+  async (data) => {
+    // console.log("ID ", data);
+    const response = await getVoterConfirmationNoREQ(data);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
 const electionCommisionSlice = createSlice({
   //When we use state in createSlice it only define for this mwthod
   name: "electionCommision",
@@ -144,9 +181,27 @@ const electionCommisionSlice = createSlice({
     handleMinerPages: (state, action) => {
       state.minnerpage = action.payload;
     },
+    handleECPages: (state, action) => {
+      state.electioncommissnerpage = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
+      .addCase(genrateVoterConfirmationNoREQAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        genrateVoterConfirmationNoREQAsync.fulfilled,
+        (state, action) => {
+          state.status = "idle";
+        }
+      )
+      .addCase(getVoterConfirmationNoREQREQAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getVoterConfirmationNoREQREQAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+      })
       //////////////////// Check all payloads correctly before running
       //
       .addCase(getEleCommissionAsync.pending, (state) => {
@@ -154,8 +209,24 @@ const electionCommisionSlice = createSlice({
       })
       .addCase(getEleCommissionAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        // console.log(
+        //   "action.payload.ElectionComission",
+        //   action.payload.ElectionComission
+        // ); //OK
         state.electioncommissner = action.payload.ElectionComission;
+        // console.log(state.electioncommissner); //OK
       })
+
+      .addCase(getAllEleCommissionAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getAllEleCommissionAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.Allelectioncommissner = action.payload.ElectionCommission;
+        state.totalElectionCommissions =
+          action.payload.totalElectionCommissions;
+      })
+      //
       .addCase(getAllMinnersAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -189,11 +260,6 @@ const electionCommisionSlice = createSlice({
       })
       .addCase(updateElectionCommissionerAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log("updateElectionCommissionerAsync", action.payload);
-        const index = state.electioncommissner.findIndex(
-          (officer) => officer.id === action.payload.id
-        );
-        state.electioncommissner[index] = action.payload;
       })
 
       .addCase(updateMinnerIdentityAsync.pending, (state) => {
@@ -273,8 +339,15 @@ export const { handleCandiPages } = electionCommisionSlice.actions;
 export const selectCandiPage = (state) =>
   state.electionCommision.candidatespage;
 export const { handleMinerPages } = electionCommisionSlice.actions;
+export const selectECPage = (state) =>
+  state.electionCommision.electioncommissnerpage;
+export const { handleECPages } = electionCommisionSlice.actions;
 export const selectMinerPage = (state) => state.electionCommision.minnerpage;
 export const selectVoters = (state) => state.electionCommision.Voters;
+export const selectAllElectionOfficer = (state) =>
+  state.electionCommision.Allelectioncommissner;
+export const selectTotalElectionCommissions = (state) =>
+  state.electionCommision.totalElectionCommissions;
 export const selectTotalVoters = (state) => state.electionCommision.totalvoters;
 export const selectMiners = (state) => state.electionCommision.miners;
 export const selectTotalMiners = (state) => state.electionCommision.totalminers;

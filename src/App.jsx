@@ -39,6 +39,9 @@ import MinerCountVote from "./minner/ComponentOprate/MinerCountVote";
 import UpdateVoter from "./electionOfficer/ComponentOprate/UpdateVoter";
 import UpdateCandiate from "./electionOfficer/ComponentOprate/UpdateCandi";
 import UpdateMinner from "./electionOfficer/ComponentOprate/UpdateMinner";
+import VoterConfirmationNo from "./electionOfficer/ComponentOprate/VoterConfirmationNo";
+import ViewlectionCommissionPage from "./electionOfficer/ComponentOprate/ViewElectionOfficers";
+import UpdateElectionOfficer from "./electionOfficer/ComponentOprate/UpdateElectionOfficer";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -94,6 +97,23 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/ViewAllOfficer",
+    element: (
+      <ProtectedEleCom>
+        <ViewlectionCommissionPage></ViewlectionCommissionPage>
+      </ProtectedEleCom>
+    ),
+  },
+  {
+    path: "/UpdateElectionOfficer/:ID",
+    element: (
+      <ProtectedEleCom>
+        <UpdateElectionOfficer></UpdateElectionOfficer>
+      </ProtectedEleCom>
+    ),
+  },
+
+  {
     path: "/ElectionCommissionPage",
     element: (
       <ProtectedEleCom>
@@ -110,8 +130,20 @@ const router = createBrowserRouter([
     element: <ElectionCommissionSignUpForm></ElectionCommissionSignUpForm>,
   },
   {
+    path: "/VoterConfirmationNo",
+    element: (
+      <ProtectedEleCom>
+        <VoterConfirmationNo></VoterConfirmationNo>,
+      </ProtectedEleCom>
+    ),
+  },
+  {
     path: "/CreateMinner",
-    element: <CreateMinnerPage></CreateMinnerPage>,
+    element: (
+      <ProtectedEleCom>
+        <CreateMinnerPage></CreateMinnerPage>
+      </ProtectedEleCom>
+    ),
   },
   {
     path: "/MinnerProfile",

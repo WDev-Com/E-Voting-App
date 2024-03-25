@@ -49,10 +49,6 @@ const candidateSlice = createSlice({
       })
       .addCase(updateCandidateAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        const index = state.candidateData.findIndex(
-          (candidate) => candidate.id === action.payload.id
-        );
-        state.candidateData[index] = action.payload;
       });
   },
 });

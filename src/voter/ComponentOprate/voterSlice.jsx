@@ -93,10 +93,6 @@ const voterSlice = createSlice({
       })
       .addCase(updateVoterAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        const index = state.VoterData.findIndex(
-          (voter) => voter.id === action.payload.id
-        );
-        state.VoterData[index] = action.payload;
       });
   },
 });
