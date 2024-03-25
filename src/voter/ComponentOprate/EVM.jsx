@@ -4,19 +4,53 @@ import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import NavBarVoter from "../Navigations/VoterNavigation";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getVoterByIdAsync,
+  selectVoterData,
+  updateVoterAsync,
+} from "./voterSlice";
+import {
+  selectLoggedInVoterToken,
+  signOutVoterAsync,
+} from "../ComponentAuth/voterAuthSlice";
+import {
+  createVoteAsync,
   getAllCandidateOFConstituencyAsync,
   selectCandidateOFConstituency,
 } from "./voterSlice";
+import { createVote } from "./voterAPI";
 
 function Evm() {
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const currentVoter = useSelector(selectVoterData);
+  const currentVoterID = useSelector(selectLoggedInVoterToken);
+  useEffect(() => {
+    dispatch(getVoterByIdAsync({ id: currentVoterID }));
+    // dispatch(updateElectionCommissionerAsync(electionCommisionNew));
+  }, [dispatch]);
   let allCandidate = useSelector(selectCandidateOFConstituency);
   useEffect(() => {
     dispatch(getAllCandidateOFConstituencyAsync({ consti: "Pali" }));
-  }, []);
-  const handleVote = (candidate) => {
-    console.log("Voted for:", candidate.name);
-    // You can implement the logic to submit the vote here
+  }, [dispatch]);
+  /*
+  "voterID": { "type": "string" },
+    "candidateID": { "type": "string" },
+    "authority": { "type": "string" } */
+  const handleVote = (candidateID) => {
+    //candidateID
+    // console.log({
+    //   voterID: currentVoter.VoterID,
+    //   candidateID: candidateID,
+    //   authority: currentVoter.authority,
+    // });
+    dispatch(
+      createVoteAsync({
+        voterID: currentVoter.VoterID,
+        candidateID: candidateID,
+        authority: currentVoter.authority,
+      })
+    );
+    dispatch(updateVoterAsync({ id: currentVoter.id, voteStatus: true }));
+    dispatch(signOutVoterAsync());
   };
 
   return (
@@ -77,7 +111,7 @@ function Evm() {
                       className="w-6 h-6 md:w-8 md:h-8 font-bold"
                     />
                     <button
-                      onClick={() => handleVote(candidate)}
+                      onClick={() => handleVote(candidate.CandidateID)}
                       className="bg-indigo-500 hover:bg-indigo-700 text-white px-4 md:px-6 rounded-full py-2"
                     >
                       Vote

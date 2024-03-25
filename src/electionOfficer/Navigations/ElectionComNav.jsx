@@ -7,21 +7,21 @@ import { signOutAsync } from "../ComponentAuth/electionOfficerAuthSlice";
 import { selectElectionCommissner } from "../ComponentOprate/electionOfficerSlice";
 
 const navigation = [
-  { name: "HomePage", to: "/ElectionCommissionPage", current: false },
-  { name: "Voters", to: "/ViewVoter", current: false },
-  { name: "Candidates", to: "/ViewCandidate", current: false },
-  { name: "Minners", to: "/ViewMinner", current: false },
+  { name: "HomePage", to: "/ElectionCommissionPage", officer: true },
+  { name: "Voters", to: "/ViewVoter", officer: true },
+  { name: "Candidates", to: "/ViewCandidate", officer: true },
+  { name: "Minners", to: "/ViewMinner", officer: true },
   {
     name: "Officer",
     to: "/ViewAllOfficer",
-    current: false,
+    officer: true,
   },
 
-  { name: "Create Minner", to: "/CreateMinner", current: false },
+  { name: "Create Minner", to: "/CreateMinner", officer: true },
   {
     name: "Create VCN",
     to: "/VoterConfirmationNo",
-    current: false,
+    VCNofficer: true,
   },
 ];
 
@@ -61,21 +61,23 @@ export default function NavBar({ children }) {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {navigation.map((item) => (
-                        <Link
-                          key={item.name}
-                          to={item.to}
-                          className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "rounded-md px-3 py-2 text-sm font-medium"
-                          )}
-                          aria-current={item.current ? "page" : undefined}
-                        >
-                          {item.name}
-                        </Link>
-                      ))}
+                      {navigation.map((item) =>
+                        item[currentElectionCommissioner.role] ? (
+                          <Link
+                            key={item.name}
+                            to={item.to}
+                            className={classNames(
+                              item.current
+                                ? "bg-gray-900 text-white"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                              "rounded-md px-3 py-2 text-sm font-medium"
+                            )}
+                            aria-current={item.current ? "page" : undefined}
+                          >
+                            {item.name}
+                          </Link>
+                        ) : null
+                      )}
                     </div>
                   </div>
                 </div>

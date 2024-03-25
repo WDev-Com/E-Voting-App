@@ -88,6 +88,7 @@ const ElectionCommissionPage = () => {
     newUser.profileimages = previewUrl;
     newUser.email = profileUpdate.email;
     dispatch(updateElectionCommissionerAsync({ ...newUser }));
+    dispatch(signOutAsync());
   };
 
   const [editStatus, setEditstatus] = useState(false);

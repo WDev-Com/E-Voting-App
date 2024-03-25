@@ -40,11 +40,12 @@ export function getAllCandidateOFConstituency({ consti }) {
   });
 }
 
-export function createVote(VoteData, ID) {
+export function createVote(VoteData) {
   // console.log("From API ", VoteData);
+  let cnf = prompt("Enter Vote Confirmation No");
   return new Promise(async (resolve) => {
     const response = await fetch(
-      `http://localhost:8081/VoterOperation/CreatingVote` + ID,
+      `http://localhost:8081/VoterOperation/CreatingVote/` + cnf,
       {
         method: "POST",
         body: JSON.stringify(VoteData),
@@ -64,7 +65,7 @@ export function createVote(VoteData, ID) {
 }
 
 export function updateVoter(data) {
-  // console.log("updateVoter", data);
+  // consoles.log("updateVoter", data);
   return new Promise(async (resolve) => {
     try {
       const response = await fetch(

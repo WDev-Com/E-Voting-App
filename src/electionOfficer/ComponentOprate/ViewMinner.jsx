@@ -100,7 +100,7 @@ const MinnerPage = () => {
 
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-3">
-                <h3 className="text-2xl font-bold mb-4">All Voter</h3>
+                <h3 className="text-2xl font-bold mb-4">All Miners</h3>
                 <div className="mb-4 font-bold">
                   Total Minner Count : {MinnerTotalCount}
                 </div>

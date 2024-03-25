@@ -38,12 +38,13 @@ export function getVoterConfirmationNoREQ(datas) {
       if (response.ok) {
         alert("Voter Confirmation No : " + data.VoterConfirmNo);
         // toast.success("NO : " + data.VoterConfirmNo);
+      } else {
+        toast.error("Fetching Fail");
       }
 
       resolve({ data });
     } catch (error) {
       console.log(error);
-      toast.error("Fetching Fail ");
     }
   });
 }

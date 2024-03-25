@@ -7,7 +7,10 @@ import { BiImageAdd } from "react-icons/bi";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import NavBar from "../Navigations/ElectionComNav";
-import { selectLoggedInUserToken } from "../ComponentAuth/electionOfficerAuthSlice";
+import {
+  selectLoggedInUserToken,
+  signOutAsync,
+} from "../ComponentAuth/electionOfficerAuthSlice";
 import {
   getEleCommissionAsync,
   selectElectionCommissner,
@@ -68,6 +71,7 @@ function UpdateElectionOfficer() {
     newUser.role = selected.role;
     // console.log(newUser);
     dispatch(updateElectionCommissionerAsync({ ...newUser }));
+    dispatch(signOutAsync());
   };
   return (
     <NavBar>

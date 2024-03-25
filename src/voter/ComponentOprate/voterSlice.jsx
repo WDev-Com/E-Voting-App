@@ -3,6 +3,7 @@ import {
   getVoterById,
   getAllCandidateOFConstituency,
   updateVoter,
+  createVote,
 } from "./voterAPI";
 const initialState = {
   value: 0,
@@ -42,9 +43,9 @@ export const getAllCandidateOFConstituencyAsync = createAsyncThunk(
 
 export const createVoteAsync = createAsyncThunk(
   "voter/createVote",
-  async (userData, ID) => {
+  async (userData) => {
     // console.log("From Slice : ", userData, ID);
-    const response = await createVote(userData, ID);
+    const response = await createVote(userData);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
