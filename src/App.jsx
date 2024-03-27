@@ -35,7 +35,7 @@ import VoterSignUpForm from "./voter/ComponentAuth/SignUpVoter";
 import LoginVoterPage from "./voter/ComponentAuth/LoginVoter";
 import { selectVoterChecked } from "./voter/ComponentAuth/voterAuthSlice";
 import VoterEVMPage from "./voter/ComponentOprate/EVM";
-import MinerCountVote from "./minner/ComponentOprate/MinerCountVote";
+import MinerVoteMining from "./minner/ComponentOprate/MinerVoteMining";
 import UpdateVoter from "./electionOfficer/ComponentOprate/UpdateVoter";
 import UpdateCandiate from "./electionOfficer/ComponentOprate/UpdateCandi";
 import UpdateMinner from "./electionOfficer/ComponentOprate/UpdateMinner";
@@ -160,7 +160,11 @@ const router = createBrowserRouter([
 
   {
     path: "/MinerCountVote",
-    element: <MinerCountVote></MinerCountVote>,
+    element: (
+      <ProtectedMinner>
+        <MinerVoteMining></MinerVoteMining>
+      </ProtectedMinner>
+    ),
   },
   {
     path: "/CandidateProfile",

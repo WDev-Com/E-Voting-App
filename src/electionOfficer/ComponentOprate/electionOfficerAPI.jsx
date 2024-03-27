@@ -164,6 +164,9 @@ export const getAllCandidates = (pagination, filters) => {
       const totalCandidatesCOUNT = response.headers.get(
         "X-TotalCandidates-Count"
       );
+      console.log(
+        "http://localhost:8081/EleCommisson/getAllCandidate?" + queryString
+      );
       resolve({
         data: { candidates: data, totalCandidates: +totalCandidatesCOUNT },
       });

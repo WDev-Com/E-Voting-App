@@ -66,7 +66,7 @@ const CandidatePage = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   // constituency: "Lanja"; party: "BJP" user
   const candidates = useSelector(selectCandidates);
-  console.log(candidates[0]);
+  // console.log(candidates);
   const candidatestotalcount = useSelector(selectTotalCandidates);
   //role: "voter", constituency: "Lanja"
   /////// Filter Settings
@@ -176,55 +176,56 @@ const ViewList = ({ candidates, candidatestotalcount, dispatch }) => {
   return (
     <div className="container mx-auto p-4">
       <div>
-        {candidates.map((ele) => (
-          <div
-            key={ele.id}
-            className="mb-8 p-4 rounded-lg shadow-lg border border-gray-200 hover:border-blue-500 flex flex-col relative mr-4 "
-          >
-            <div className="flex items-center mb-4">
-              <div className="mr-4">
-                <img
-                  src={ele.profileimages}
-                  alt={ele.name}
-                  className="w-16 h-16 rounded-full"
-                />
-                <p className="text-sm text-center mt-2">{ele.name}</p>
-              </div>
-              <div className="mr-4">
-                <img
-                  src={ele.PartySymbol}
-                  alt={ele.Party}
-                  className="w-16 h-16 rounded-full"
-                />
-                <p className="text-sm text-center mt-2">{ele.Party}</p>
-              </div>
-              <div className="flex-1">
-                <p className="text-lg font-bold">
-                  Candidate ID: {ele.CandidateID}
-                </p>
-                <p>Role: {ele.role}</p>
-                <p>Vote Count: {ele.VoteCount || "0"}</p>
+        {candidates &&
+          candidates.map((ele) => (
+            <div
+              key={ele.id}
+              className="mb-8 p-4 rounded-lg shadow-lg border border-gray-200 hover:border-blue-500 flex flex-col relative mr-4 "
+            >
+              <div className="flex items-center mb-4">
+                <div className="mr-4">
+                  <img
+                    src={ele.profileimages}
+                    alt={ele.name}
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <p className="text-sm text-center mt-2">{ele.name}</p>
+                </div>
+                <div className="mr-4">
+                  <img
+                    src={ele.PartySymbol}
+                    alt={ele.Party}
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <p className="text-sm text-center mt-2">{ele.Party}</p>
+                </div>
+                <div className="flex-1">
+                  <p className="text-lg font-bold">
+                    Candidate ID: {ele.CandidateID}
+                  </p>
+                  <p>Role: {ele.role}</p>
+                  <p>Vote Count: {ele.VoteCount || "0"}</p>
 
-                <p>Constituency: {ele.Constituency}</p>
-                <p>Email: {ele.email}</p>
+                  <p>Constituency: {ele.Constituency}</p>
+                  <p>Email: {ele.email}</p>
+                </div>
+              </div>
+              <div className="absolute bottom-2 right-3 flex justify-end">
+                <Link to={`/UpdateCandidate/${ele.id}`}>
+                  <button className="mr-2">
+                    <FaEdit />
+                  </button>
+                </Link>
+                <button
+                  onClick={() => {
+                    dispatch(deleteCandidateAsync(ele.id));
+                  }}
+                >
+                  <FaTrash />
+                </button>
               </div>
             </div>
-            <div className="absolute bottom-2 right-3 flex justify-end">
-              <Link to={`/UpdateCandidate/${ele.id}`}>
-                <button className="mr-2">
-                  <FaEdit />
-                </button>
-              </Link>
-              <button
-                onClick={() => {
-                  dispatch(deleteCandidateAsync(ele.id));
-                }}
-              >
-                <FaTrash />
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
