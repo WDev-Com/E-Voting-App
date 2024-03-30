@@ -86,6 +86,9 @@ export function MineVotes(id) {
     const dataA = await response.json();
     // console.log(dataA);
     toast.success(dataA.success);
+    if (!response.ok) {
+      toast.error(dataA.ErrorMinning);
+    }
     // console.log("Fetched Top Produts:", data); // Add this line
     resolve({ data: { error: dataA.ErrorMinning } });
   });
@@ -105,6 +108,9 @@ export function AddBlock(id) {
     const dataA = await response.json();
     console.log(dataA);
     toast.success(dataA.success);
+    if (!response.ok) {
+      toast.error(dataA.error);
+    }
     // console.log("Fetched Top Produts:", data); // Add this line
     resolve({ data: { error: dataA.error } });
   });

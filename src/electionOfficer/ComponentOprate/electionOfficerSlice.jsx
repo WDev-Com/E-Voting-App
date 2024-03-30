@@ -14,6 +14,7 @@ import {
   genrateVoterConfirmationNoREQ,
   getVoterConfirmationNoREQ,
   getAllEleCommission,
+  countVote,
 } from "./electionOfficerAPI";
 const initialState = {
   value: 0,
@@ -62,6 +63,14 @@ export const getAllCandidatessAsync = createAsyncThunk(
     // console.log("Slice==========>", filter);
     const response = await getAllCandidates(pagination, filter);
     // console.log("response========>", response);
+    return response.data;
+  }
+);
+
+export const countVoteAsync = createAsyncThunk(
+  "electionCommision/countVote",
+  async ({ ID }) => {
+    const response = await countVote(ID);
     return response.data;
   }
 );
@@ -252,6 +261,18 @@ const electionCommisionSlice = createSlice({
         state.status = "idle";
         state.Voters = action.payload.voters;
         state.totalvoters = action.payload.totalvoters;
+      })
+      //
+      .addCase(countVoteAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(countVoteAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.candidates.findIndex(
+          (candi) => candi.id === action.payload.id
+        );
+        state.candidates[index] = action.payload.cadidate;
+        console.log(state.candidates[index]);
       })
       ////////////////// Update Operation
 

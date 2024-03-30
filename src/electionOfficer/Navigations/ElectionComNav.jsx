@@ -23,6 +23,16 @@ const navigation = [
     to: "/VoterConfirmationNo",
     VCNofficer: true,
   },
+  {
+    name: "Profile",
+    to: "/ElectionCommissionPage",
+    VoteCounterofficer: true,
+  },
+  {
+    name: "Count Vote",
+    to: "/countVote",
+    VoteCounterofficer: true,
+  },
 ];
 
 function classNames(...classes) {

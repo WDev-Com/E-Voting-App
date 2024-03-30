@@ -75,6 +75,31 @@ export function updateElectionCommissioner(data) {
   });
 }
 
+export function countVote(id) {
+  // console.log("id", id);
+  return new Promise(async (resolve) => {
+    // console.log();
+    const response = await fetch(
+      `http://localhost:8081/EleCommisson/CountVoteOfCandidate/` + id,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+      }
+    );
+    const dataA = await response.json();
+    if (!response.ok) {
+      toast.error("No Vote Found");
+      return;
+    } else {
+      toast.success("Vote Updated Successfully");
+    }
+    // console.log("Fetched Top Produts:", data); // Add this line
+    resolve({
+      data: { voteCount: dataA.data.count, cadidate: dataA.candidate },
+    });
+  });
+}
+
 ///////// It can use for fetching the user using return token
 // To find the user after a successful login attempt you
 export function getEleCommission({ id }) {

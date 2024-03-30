@@ -42,6 +42,7 @@ import UpdateMinner from "./electionOfficer/ComponentOprate/UpdateMinner";
 import VoterConfirmationNo from "./electionOfficer/ComponentOprate/VoterConfirmationNo";
 import ViewlectionCommissionPage from "./electionOfficer/ComponentOprate/ViewElectionOfficers";
 import UpdateElectionOfficer from "./electionOfficer/ComponentOprate/UpdateElectionOfficer";
+import CountVotePanel from "./electionOfficer/ComponentOprate/countVotePanel";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -128,6 +129,14 @@ const router = createBrowserRouter([
   {
     path: "/ElectionCommissionSignUpForm",
     element: <ElectionCommissionSignUpForm></ElectionCommissionSignUpForm>,
+  },
+  {
+    path: "/countVote",
+    element: (
+      <ProtectedEleCom>
+        <CountVotePanel></CountVotePanel>,
+      </ProtectedEleCom>
+    ),
   },
   {
     path: "/VoterConfirmationNo",

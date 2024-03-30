@@ -19,6 +19,42 @@ const MinerVoteMining = () => {
   const currminner = useSelector(selectMinnerData);
   const Error = useSelector(selectError);
   console.log("Error", Error);
+  ///////////// For Vote Mining
+  const [miningInterval, setMiningInterval] = useState(null);
+  const [intervalId, setIntervalId] = useState(null);
+
+  const startMining = () => {
+    if (miningInterval) return; // Mining already in progress
+    const newIntervalId = setInterval(() => {
+      dispatch(MineVotesAsync({ id: currminner.MinnerID }));
+    }, 2000); // Adjust the interval as needed
+
+    setIntervalId(newIntervalId);
+    setMiningInterval(true);
+  };
+
+  const stopMining = () => {
+    clearInterval(intervalId);
+    setMiningInterval(null);
+  };
+  ///////////// For Block Adding
+  const [blockAddInterval, setBlockAddInterval] = useState(null);
+  const [blockAddIntervalId, setBlockAddIntervalId] = useState(null);
+
+  const startAddingBlock = () => {
+    if (blockAddInterval) return;
+    const newBlockAddInterval = setInterval(() => {
+      dispatch(AddBlockAsync({ id: currminner.MinnerID }));
+    }, 2000);
+
+    setBlockAddIntervalId(newBlockAddInterval);
+    setBlockAddInterval(true);
+  };
+
+  const stopAddingBlock = () => {
+    clearInterval(blockAddIntervalId);
+    setBlockAddInterval(null);
+  };
 
   useEffect(() => {
     dispatch(fetchMinerDataAsync(currminner.MinnerID));
@@ -44,14 +80,18 @@ const MinerVoteMining = () => {
                   </div>
                   <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    onClick={() => {
-                      if (Error) {
-                        toast.error(Error);
-                      }
-                      dispatch(MineVotesAsync({ id: currminner.MinnerID }));
-                    }}
+                    onClick={startMining}
+                    // onClick={() => {
+                    //   dispatch(MineVotesAsync({ id: currminner.MinnerID }));
+                    // }}
                   >
                     START MINING
+                  </button>
+                  <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    onClick={stopMining}
+                  >
+                    STOP MINING
                   </button>
                 </div>
               </div>
@@ -73,14 +113,15 @@ const MinerVoteMining = () => {
                   </div>
                   <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    onClick={() => {
-                      if (Error) {
-                        toast.error(Error);
-                      }
-                      dispatch(AddBlockAsync({ id: currminner.MinnerID }));
-                    }}
+                    onClick={startAddingBlock}
                   >
                     ADD BLOCK
+                  </button>
+                  <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    onClick={stopAddingBlock}
+                  >
+                    STOP
                   </button>
                 </div>
               </div>
