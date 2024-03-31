@@ -7,6 +7,7 @@ import candidateReducer from "../src/candidate/ComponentOprate/CandidateSlice";
 import candidateAuthReducer from "../src/candidate/ComponentAuth/CandidateAuthSlice";
 import voterAuthReducer from "../src/voter/ComponentAuth/voterAuthSlice";
 import voterReducer from "../src/voter/ComponentOprate/voterSlice";
+import commonReducer from "../src/CommonComponent/ElectionsResults/CommonSlice";
 const store = configureStore({
   reducer: {
     electionCommision: electionCommisionReducer,
@@ -17,6 +18,7 @@ const store = configureStore({
     CandidateAuth: candidateAuthReducer,
     voter: voterReducer,
     VoterAuth: voterAuthReducer,
+    commonResource: commonReducer,
   },
 });
 

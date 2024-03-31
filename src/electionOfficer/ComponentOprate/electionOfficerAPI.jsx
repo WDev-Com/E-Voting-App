@@ -100,6 +100,30 @@ export function countVote(id) {
   });
 }
 
+export function WinnerFetch(constituency) {
+  // console.log("id", id);
+  return new Promise(async (resolve) => {
+    // console.log();
+    const response = await fetch(
+      `http://localhost:8081/EleCommisson/EleWinner/` + constituency,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+      }
+    );
+    const dataA = await response.json();
+    // console.log(dataA);
+    if (!response.ok) {
+      toast.error("No Winner Found");
+      return;
+    } else {
+      toast.success("Winner");
+    }
+    // console.log("Fetched Top Produts:", data); // Add this line
+    resolve({ dataA });
+  });
+}
+
 ///////// It can use for fetching the user using return token
 // To find the user after a successful login attempt you
 export function getEleCommission({ id }) {

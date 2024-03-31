@@ -15,6 +15,7 @@ import {
   getVoterConfirmationNoREQ,
   getAllEleCommission,
   countVote,
+  WinnerFetch,
 } from "./electionOfficerAPI";
 const initialState = {
   value: 0,
@@ -27,7 +28,7 @@ const initialState = {
   miners: [],
   totalminers: 0,
   candidates: [],
-
+  winners: [],
   totalcandidates: 0,
   error: null,
   voterpage: 1,
@@ -57,6 +58,15 @@ export const getAllMinnersAsync = createAsyncThunk(
   }
 );
 
+export const WinnerFetchAsync = createAsyncThunk(
+  "electionCommision/WinnerFetch",
+  async ({ constituency }) => {
+    // console.log("WinnerFetchAsync==========>", constituency);
+    const response = await WinnerFetch(constituency);
+
+    return response.dataA;
+  }
+);
 export const getAllCandidatessAsync = createAsyncThunk(
   "electionCommision/getAllCandidates",
   async ({ pagination, filter }) => {
@@ -196,6 +206,18 @@ const electionCommisionSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(WinnerFetchAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(WinnerFetchAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        let candidate = state.winners.find(
+          (ele) => ele.CandidateID === action.payload.CandidateID
+        );
+        if (!candidate) {
+          state.winners.push(action.payload);
+        }
+      })
       .addCase(genrateVoterConfirmationNoREQAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -352,6 +374,7 @@ const electionCommisionSlice = createSlice({
   },
 });
 
+export const selectWinners = (state) => state.electionCommision.winners;
 export const selectElectionCommissner = (state) =>
   state.electionCommision.electioncommissner;
 export const selectVoterPage = (state) => state.electionCommision.voterpage;
@@ -375,5 +398,6 @@ export const selectTotalMiners = (state) => state.electionCommision.totalminers;
 export const selectCandidates = (state) => state.electionCommision.candidates;
 export const selectTotalCandidates = (state) =>
   state.electionCommision.totalcandidates;
+//
 
 export default electionCommisionSlice.reducer;

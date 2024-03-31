@@ -43,6 +43,7 @@ const CandidateSignUpForm = () => {
                   Party: "",
                   PartySymbol: "",
                   VoteCount: "",
+                  winningsStatus: false,
                   addresses: "",
                   profileimages: "",
                 })

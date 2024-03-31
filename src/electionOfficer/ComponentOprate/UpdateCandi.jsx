@@ -59,7 +59,7 @@ function UpdateCandiate() {
     delete newUser.VoteCount;
     delete newUser.addresses;
     // console.log("selected.role", selected.role);
-    newUser.CandidateID = profileUpdate.VoterID;
+    newUser.CandidateID = profileUpdate.CandidateID;
     newUser.Party = profileUpdate.Party;
     newUser.role = selected.role;
     newUser.Constituency = profileUpdate.Constituency;
@@ -149,8 +149,8 @@ function UpdateCandiate() {
                       <label className="block mb-2">Candidate ID :</label>
                       <input
                         type="text"
-                        name="VoterID"
-                        id="VoterID"
+                        name="CandidateID"
+                        id="CandidateID"
                         {...register("CandidateID", {
                           required: "Voter ID is required",
                         })}
@@ -158,7 +158,7 @@ function UpdateCandiate() {
                         placeholder={
                           currentCandidate.CandidateID
                             ? currentCandidate.CandidateID
-                            : "Voter ID Not Assign"
+                            : "Candidate ID Not Assign"
                         }
                       />
                       {/*------- Party----------- */}

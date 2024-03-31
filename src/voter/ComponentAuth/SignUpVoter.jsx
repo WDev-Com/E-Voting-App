@@ -40,7 +40,7 @@ const VoterSignUpForm = () => {
                   authority: "",
                   role: "",
                   VoterID: "",
-                  voteStatus: "false",
+                  voteStatus: false,
                   Constituency: "",
                   addresses: "",
                   profileimages: "",

@@ -29,7 +29,9 @@ function Evm() {
   }, [dispatch]);
   let allCandidate = useSelector(selectCandidateOFConstituency);
   useEffect(() => {
-    dispatch(getAllCandidateOFConstituencyAsync({ consti: "Pali" }));
+    dispatch(
+      getAllCandidateOFConstituencyAsync({ consti: currentVoter.Constituency })
+    );
   }, [dispatch]);
   /*
   "voterID": { "type": "string" },
@@ -49,7 +51,6 @@ function Evm() {
         authority: currentVoter.authority,
       })
     );
-    dispatch(updateVoterAsync({ id: currentVoter.id, voteStatus: true }));
     dispatch(signOutVoterAsync());
   };
 

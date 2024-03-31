@@ -27,7 +27,7 @@ const MinerVoteMining = () => {
     if (miningInterval) return; // Mining already in progress
     const newIntervalId = setInterval(() => {
       dispatch(MineVotesAsync({ id: currminner.MinnerID }));
-    }, 2000); // Adjust the interval as needed
+    }, 3000); // Adjust the interval as needed
 
     setIntervalId(newIntervalId);
     setMiningInterval(true);
@@ -45,7 +45,7 @@ const MinerVoteMining = () => {
     if (blockAddInterval) return;
     const newBlockAddInterval = setInterval(() => {
       dispatch(AddBlockAsync({ id: currminner.MinnerID }));
-    }, 2000);
+    }, 3000);
 
     setBlockAddIntervalId(newBlockAddInterval);
     setBlockAddInterval(true);

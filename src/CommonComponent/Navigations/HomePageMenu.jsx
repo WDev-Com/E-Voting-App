@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "HomePage", to: "/", current: false },
+  { name: "Winner", to: "/AllWinners", current: false },
+  { name: "Party Majority", to: "/MajorParty", current: false },
+
   {
     name: "Election Commissioner Login",
     to: "/ElectionCommissionLoginPage",

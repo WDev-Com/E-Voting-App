@@ -8,8 +8,8 @@ import { selectVoterData } from "../ComponentOprate/voterSlice";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const navigation = [
-  { name: "HomePage", to: "/VoterProfile", voteStatus: "true" },
-  { name: "EVM", to: "/VoteOnEVM", voteStatus: "false" },
+  { name: "HomePage", to: "/VoterProfile", voteStatus: true },
+  { name: "EVM", to: "/VoteOnEVM", voteStatus: false },
 ];
 
 function classNames(...classes) {

@@ -43,12 +43,24 @@ import VoterConfirmationNo from "./electionOfficer/ComponentOprate/VoterConfirma
 import ViewlectionCommissionPage from "./electionOfficer/ComponentOprate/ViewElectionOfficers";
 import UpdateElectionOfficer from "./electionOfficer/ComponentOprate/UpdateElectionOfficer";
 import CountVotePanel from "./electionOfficer/ComponentOprate/countVotePanel";
+import WinnerCounting from "./electionOfficer/ComponentOprate/WinnerCounting";
+import AllWinners from "./CommonComponent/ElectionsResults/AllWinners";
+import MajorParty from "./CommonComponent/ElectionsResults/MajorParty";
 /* Import of Components */
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage></HomePage>,
   },
+  {
+    path: "/AllWinners",
+    element: <AllWinners></AllWinners>,
+  },
+  {
+    path: "/MajorParty",
+    element: <MajorParty></MajorParty>,
+  },
+
   {
     path: "/ViewCandidate",
     element: (
@@ -138,6 +150,15 @@ const router = createBrowserRouter([
       </ProtectedEleCom>
     ),
   },
+  {
+    path: "/WinnerCounting",
+    element: (
+      <ProtectedEleCom>
+        <WinnerCounting></WinnerCounting>,
+      </ProtectedEleCom>
+    ),
+  },
+
   {
     path: "/VoterConfirmationNo",
     element: (

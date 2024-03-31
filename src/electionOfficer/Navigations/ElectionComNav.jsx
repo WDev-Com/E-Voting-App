@@ -16,22 +16,26 @@ const navigation = [
     to: "/ViewAllOfficer",
     officer: true,
   },
-
-  { name: "Create Minner", to: "/CreateMinner", officer: true },
-  {
-    name: "Create VCN",
-    to: "/VoterConfirmationNo",
-    VCNofficer: true,
-  },
   {
     name: "Profile",
     to: "/ElectionCommissionPage",
     VoteCounterofficer: true,
   },
   {
+    name: "Winner Counting",
+    to: "/WinnerCounting",
+    officer: true,
+  },
+  {
     name: "Count Vote",
     to: "/countVote",
     VoteCounterofficer: true,
+  },
+  { name: "Create Minner", to: "/CreateMinner", officer: true },
+  {
+    name: "Create VCN",
+    to: "/VoterConfirmationNo",
+    VCNofficer: true,
   },
 ];
 
@@ -140,22 +144,24 @@ export default function NavBar({ children }) {
             </div>
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
-                {navigation.map((item) => (
-                  <Link to={item.to} key={item.name}>
-                    <Disclosure.Button
-                      as="a"
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "block rounded-md px-3 py-2 text-base font-medium"
-                      )}
-                      aria-current={item.current ? "page" : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  </Link>
-                ))}
+                {navigation.map((item) =>
+                  item[currentElectionCommissioner.role] ? (
+                    <Link to={item.to} key={item.name}>
+                      <Disclosure.Button
+                        as="a"
+                        className={classNames(
+                          item.current
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          "block rounded-md px-3 py-2 text-base font-medium"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Disclosure.Button>
+                    </Link>
+                  ) : null
+                )}
               </div>
             </Disclosure.Panel>
           </>
