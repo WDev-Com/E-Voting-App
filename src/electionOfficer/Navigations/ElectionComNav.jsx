@@ -33,6 +33,11 @@ const navigation = [
   },
   { name: "Create Minner", to: "/CreateMinner", officer: true },
   {
+    name: "Minner BlockChain Entry",
+    to: "/MinnerBlockChainEntry",
+    officer: true,
+  },
+  {
     name: "Create VCN",
     to: "/VoterConfirmationNo",
     VCNofficer: true,

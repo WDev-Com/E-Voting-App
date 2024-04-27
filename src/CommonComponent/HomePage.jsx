@@ -54,10 +54,7 @@ const HomePage = () => {
           <div className="feature">
             <img src={convenientIcon} alt="Convenient Icon" />
             <h3>Convenience</h3>
-            <p>
-              Vote from the comfort of your home, anytime during the voting
-              period.
-            </p>
+            <p>Vote from the comfort of anytime during the voting period.</p>
           </div>
           <div className="feature">
             <img src={transparentIcon} alt="Transparent Icon" />

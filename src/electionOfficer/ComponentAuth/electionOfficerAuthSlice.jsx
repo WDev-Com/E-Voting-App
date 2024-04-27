@@ -5,6 +5,7 @@ import {
   loginEleCommission,
   checkEleCommission,
   signOut,
+  genrateMinnerBlockChainEntry,
 } from "./electionOfficerAuthAPI";
 import { toast } from "react-toastify";
 const initialState = {
@@ -33,6 +34,15 @@ export const createMinnerAsync = createAsyncThunk(
   "electionCommisionAuth/createMinner",
   async (userData) => {
     const response = await createMinner(userData);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const genrateMinnerBlockChainEntryAsync = createAsyncThunk(
+  "electionCommisionAuth/genrateMinnerBlockChainEntry",
+  async (userData) => {
+    const response = await genrateMinnerBlockChainEntry(userData);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -88,6 +98,12 @@ const electionCommisionAuthSlice = createSlice({
       .addCase(createEleCommissionAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUserToken = action.payload;
+      })
+      .addCase(genrateMinnerBlockChainEntryAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(genrateMinnerBlockChainEntryAsync.fulfilled, (state, action) => {
+        state.status = "idle";
       })
       .addCase(createMinnerAsync.pending, (state) => {
         state.status = "loading";

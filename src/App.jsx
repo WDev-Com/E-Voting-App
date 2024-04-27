@@ -46,6 +46,7 @@ import CountVotePanel from "./electionOfficer/ComponentOprate/countVotePanel";
 import WinnerCounting from "./electionOfficer/ComponentOprate/WinnerCounting";
 import AllWinners from "./CommonComponent/ElectionsResults/AllWinners";
 import MajorParty from "./CommonComponent/ElectionsResults/MajorParty";
+import MinnerBlockChainEntry from "./electionOfficer/ComponentOprate/MinnerBlockChainEntry";
 /* Import of Components */
 const router = createBrowserRouter([
   {
@@ -164,6 +165,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedEleCom>
         <VoterConfirmationNo></VoterConfirmationNo>,
+      </ProtectedEleCom>
+    ),
+  },
+  {
+    path: "/MinnerBlockChainEntry",
+    element: (
+      <ProtectedEleCom>
+        <MinnerBlockChainEntry></MinnerBlockChainEntry>,
       </ProtectedEleCom>
     ),
   },

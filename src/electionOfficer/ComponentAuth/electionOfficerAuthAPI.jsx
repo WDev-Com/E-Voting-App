@@ -1,6 +1,32 @@
 import { toast } from "react-toastify";
 
 ////////****************AUTH ***************//////////////////////////////////////////////////////////////////////////
+export function genrateMinnerBlockChainEntry(datas) {
+  return new Promise(async (resolve) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/EleCommisson/CreateMinnerInBlockChain/`,
+        {
+          method: "POST",
+          body: JSON.stringify(datas),
+          headers: { "content-type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      // console.log("Response from server:", data); // Add this line to log the response
+      if (response.ok) {
+        toast.success("Minner Created Successfully");
+        // toast.success("NO : " + data.VoterConfirmNo);
+      } else {
+        toast.error("Minner Creation Fail");
+      }
+
+      resolve({ data });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
 
 export function createEleCommission(userData) {
   // console.log("From API ", userData);
