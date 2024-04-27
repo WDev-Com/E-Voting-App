@@ -1,0 +1,339 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f6ff;
+}
+
+.container {
+  max-width: 1200px;
+  background-color: #f4f0f0;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Make the container fill the entire component */
+  background-color: #8476ff;
+}
+
+.featureLabel {
+  color: #978fff;
+  background-color: #ffffff; /* Set background color for the cta section */
+  font-size: 28px; /* Increase font size */
+  font-weight: bold; /* Make the text bold */
+  text-align: center; /* Center the text */
+  text-transform: uppercase; /* Transform text to uppercase */
+  padding: 20px 20px; /* Add padding for spacing */
+
+  border-radius: 20px; /* Add border-radius for rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+}
+
+.image-container {
+  flex: 1; /* Fill remaining space */
+  display: flex;
+  justify-content: right; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  background-color: #ffffff; /* Set background color */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  border-radius: 10px; /* Add border-radius for rounded corners */
+  margin: 20px auto; /* Center the container horizontally */
+  overflow: hidden; /* Hide overflowing content */
+  position: relative; /* Position relative for absolute positioning */
+  height: 500px;
+}
+
+.image-container img {
+  width: auto; /* Auto width to maintain aspect ratio */
+  height: 100%; /* Set image height to fill the container */
+  object-fit: cover; /* Ensure the image covers the container */
+  object-position: center; /* Center the image */
+  transition: transform 0.5s ease; /* Add transition effect */
+}
+
+.image-container:hover img {
+  transform: scale(1.05); /* Scale up the image on hover */
+}
+
+.image-overlay {
+  position: absolute; /* Position absolute for overlay */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.5s ease; /* Add transition effect */
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1; /* Show overlay on hover */
+}
+
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.fancy-heading {
+  font-family: "Arial Black", sans-serif; /* Use a custom font */
+  font-size: 2.4rem; /* Larger font size */
+  color: #978fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  margin-bottom: 60px; /* Add margin for spacing below the heading */
+  background-image: linear-gradient(45deg, #ff5722, #001eff, #4caf50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fancy-list {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 0; /* Remove default left padding */
+}
+
+.fancy-list li:nth-child(1) {
+  color: #ff5722; /* Orange color for the first line */
+  font-family: "Roboto", sans-serif; /* Use a custom font */
+  font-size: 1.2rem; /* Adjust font size for the list items */
+  line-height: 1.2; /* Set line height for better readability */
+  margin-bottom: 10px; /* Add margin between list items */
+}
+
+.fancy-list li:nth-child(2) {
+  color: #2196f3; /* Blue color for the second line */
+  font-family: "Roboto", sans-serif; /* Use a custom font */
+  font-size: 1.2rem; /* Adjust font size for the list items */
+  line-height: 1.2; /* Set line height for better readability */
+  margin-bottom: 10px; /* Add margin between list items */
+}
+
+.fancy-list li:nth-child(3) {
+  color: #4caf50; /* Green color for the third line */
+  font-family: "Roboto", sans-serif; /* Use a custom font */
+  font-size: 1.2rem; /* Adjust font size for the list items */
+  line-height: 1.2; /* Set line height for better readability */
+  margin-bottom: 10px; /* Add margin between list items */
+}
+
+/* Header */
+.header {
+  background-color: #343a40;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.4em; /* Set font size to 1.5em */
+  font-weight: bold; /* Set font weight to bold */
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Add margin at the bottom of the section */
+  gap: 20px; /* Add gap between feature boxes */
+  padding: 20px 20px 10px;
+}
+
+.feature {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  background-color: #978fff; /* Change background color on hover */
+  box-shadow: 0 5px 15px rgba(49, 49, 49, 0.2); /* Increase shadow on hover */
+}
+
+.feature img {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.feature h3 {
+  font-size: 1.5rem; /* Adjust font size as needed */
+  margin-bottom: 10px; /* Add margin at the bottom of the heading */
+  color: #9d9bff; /* Set text color */
+  font-weight: bold;
+}
+
+.feature:hover h3 {
+  color: #000000; /* Change text color on hover */
+}
+
+/* Call-to-Action Section */
+.cta {
+  background-color: #978fff; /* Set background color for the cta section */
+  padding: 30px; /* Add padding for spacing */
+  display: flex; /* Use flexbox to center content vertically */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.cta-content {
+  max-width: 800px; /* Set maximum width for content */
+  text-align: center; /* Center text within content */
+}
+
+.cta-content h2 {
+  font-size: 20px; /* Adjust font size */
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Set text color */
+  margin-bottom: 20px; /* Add some spacing below the heading */
+}
+
+.cta button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.cta button:hover {
+  background-color: #0056b3;
+}
+
+.about-us {
+  text-align: center;
+  padding: 50px 0; /* Adjust padding as needed */
+}
+
+.aboutLabel {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.person {
+  display: inline-block;
+  margin: 0 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.person:hover {
+  transform: translateY(-5px);
+}
+
+.person img {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.person h2 {
+  font-size: 24px;
+  margin: 20px 0 10px;
+  color: #333;
+}
+
+.person p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 970px) {
+  .overlay-content {
+    display: none;
+  }
+
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature {
+    width: 100%;
+    margin-bottom: 10px; /* Decrease margin for smaller screens */
+  }
+
+  .person {
+    width: 90%;
+    margin: 20px auto;
+  }
+}
+
+@keyframes textAnimation1 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.fancy-list li:nth-child(1) {
+  animation: textAnimation1 3s infinite; /* Animation for the first line */
+}
+
+@keyframes textAnimation2 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.fancy-list li:nth-child(2) {
+  animation: textAnimation2 3s infinite alternate; /* Animation for the second line */
+}
+
+@keyframes textAnimation3 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.fancy-list li:nth-child(3) {
+  animation: textAnimation3 3s infinite alternate-reverse; /* Animation for the third line */
+}

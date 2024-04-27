@@ -38,7 +38,7 @@ const VoterSignUpForm = () => {
                   email: data.email,
                   password: data.password,
                   authority: "",
-                  role: "",
+                  role: "user",
                   VoterID: "",
                   voteStatus: false,
                   Constituency: "",

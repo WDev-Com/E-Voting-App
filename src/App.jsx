@@ -6,7 +6,7 @@ import "./App.css";
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 
 /* Importing The Components */
-import HomePage from "./electionOfficer/ComponentAuth/HomePage";
+import HomePage from "./CommonComponent/HomePage";
 import ViewCandidate from "./electionOfficer/ComponentOprate/ViewCandidate";
 import ViewVoter from "./electionOfficer/ComponentOprate/ViewVoter";
 import ViewMinner from "./electionOfficer/ComponentOprate/ViewMinner";
