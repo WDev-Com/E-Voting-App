@@ -309,6 +309,8 @@ export function updateVoterIdentity(datas) {
       // console.log("Response from server:", data); // Add this line to log the response
       if (response.ok) {
         toast.success("Update Successfull");
+      } else {
+        toast.error("Update Failure Voter ID Exists");
       }
       console.log({ data });
       resolve({ data });

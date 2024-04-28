@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCandidateData } from "../ComponentOprate/CandidateSlice";
 import { signOutCandidateArsync } from "../ComponentAuth/CandidateAuthSlice";
-const navigation = [
-  { name: "Home", to: "/CandidateProfile", current: false },
-  { name: "Manifesto", to: "/Manifesto", current: false },
-];
+const navigation = [{ name: "Home", to: "/CandidateProfile", current: false }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
